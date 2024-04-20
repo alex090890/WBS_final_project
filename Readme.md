@@ -1,4 +1,6 @@
-This is an application that helps the user to create flashcards and learn them.
+# Welcome to the WordWeb
+
+ This is an application that helps the user to create flashcards and learn them.
 
 Here are the main features:
 

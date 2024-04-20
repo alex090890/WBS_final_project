@@ -4,7 +4,7 @@ import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
 import bodyParser from 'body-parser';
 
 config();
-console.log(process.env);
+
 
 const uri = "mongodb+srv://alexprofteach:JANnHALJute10Lsr@cluster0.0ls7xoz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -292,7 +292,7 @@ app.delete('/deletecard/:id', async (req, res) => {
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Welcome to the WordWeb database')
 });
 
 app.listen(port, () => {

@@ -7,6 +7,7 @@ import HomeUA from './components/Home-UA';
 import AboutEN from './components/About-EN';
 import AboutDe from './components/About-DE';
 import AboutUA from './components/About-UA';
+import LoginEN from './components/LoginEN';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
         <Route path='/about' element={<AboutEN />} />
         <Route path='/de/about' element={<AboutDe />} />
         <Route path='/ua/about' element={<AboutUA />} />
+        <Route path='/login' element={<LoginEN />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>

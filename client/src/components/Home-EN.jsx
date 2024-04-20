@@ -1,7 +1,10 @@
 import Footer from "./Footer";
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router-dom";
 
 export default function HomeEN() {
+    const navigate = useNavigate();
+
     return (
         <div>
             <div className='languageswitcher'>
@@ -15,7 +18,7 @@ export default function HomeEN() {
                     <a href="/about" className="headerbutton">About</a>
                 </div>
                 <div className="logincomponent">
-                    <Button variant="primary" className="regbutton">Login</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/login')}>Login</Button>
                     <Button variant="primary" className="regbutton">Register</Button>
                 </div>
             </div>

@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import "react-tabs/style/react-tabs.css";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomeEN from './components/Home-EN';
+import HomeDe from './components/Home-De';
+import HomeUA from './components/Home-UA';
+import AboutEN from './components/About-EN';
+import AboutDe from './components/About-DE';
+import AboutUA from './components/About-UA';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomeEN />} />
+        <Route path='/de' element={<HomeDe />} />
+        <Route path='/ua' element={<HomeUA />} />
+        <Route path='/about' element={<AboutEN />} />
+        <Route path='/de/about' element={<AboutDe />} />
+        <Route path='/ua/about' element={<AboutUA />} />
+        <Route path="*" element={<h1>Not Found</h1>} />
+      </Routes>
+    </Router>
   )
 }
-
-export default App

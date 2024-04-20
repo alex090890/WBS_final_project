@@ -1,6 +1,5 @@
 import express from 'express';
 import { config } from 'dotenv';
-import path from 'path';
 import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
 import bodyParser from 'body-parser';
 
@@ -35,7 +34,9 @@ app.use(bodyParser.json());
 
 const router = express.Router();
 
-router.post('/newuser', async (req, res) => {
+//Userslist database
+
+app.post('/newuser', async (req, res) => {
   try {
     const { firstname, lastname, login, password, passwordhint, email } = req.body;
     const db = client.db("users");
@@ -49,7 +50,7 @@ router.post('/newuser', async (req, res) => {
   }
 });
 
-router.get('/users', async (req, res) => {
+app.get('/users', async (req, res) => {
   try {
     const db = client.db("users");
     const usersCollection = db.collection("users");
@@ -61,7 +62,7 @@ router.get('/users', async (req, res) => {
   }
 });
 
-router.get('/userslist', async (req, res) => {
+app.get('/userslist', async (req, res) => {
   try {
     const db = client.db("users");
     const usersCollection = db.collection("users");
@@ -79,7 +80,7 @@ router.get('/userslist', async (req, res) => {
   }
 });
 
-router.delete('/deleteuser/:id', async (req, res) => {
+app.delete('/deleteuser/:id', async (req, res) => {
   try {
     const db = client.db("users");
     const usersCollection = db.collection("users");
@@ -95,7 +96,7 @@ router.delete('/deleteuser/:id', async (req, res) => {
   }
 });
 
-router.get('/user/:id', async (req, res) => {
+app.get('/user/:id', async (req, res) => {
   try {
     const db = client.db("users");
     const usersCollection = db.collection("users");
@@ -119,11 +120,71 @@ router.get('/user/:id', async (req, res) => {
   }
 });
 
-app.use('/', router);
+app.put('/updateuser/:id', async (req, res) => {
+  try {
+    const db = client.db("users");
+    const usersCollection = db.collection("users");
+
+    // Validate the id parameter
+    if (!ObjectId.isValid(req.params.id)) {
+      res.status(400).send('Invalid user ID');
+      return;
+    }
+
+    const updateData = {};
+    if (req.body.firstname) updateData.firstname = req.body.firstname;
+    if (req.body.lastname) updateData.lastname = req.body.lastname;
+    if (req.body.login) updateData.login = req.body.login;
+    if (req.body.password) updateData.password = req.body.password;
+    if (req.body.passwordhint) updateData.passwordhint = req.body.passwordhint;
+    if (req.body.email) updateData.email = req.body.email;
+
+    const result = await usersCollection.updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
+    if (result.matchedCount === 0) {
+      res.status(404).send('User not found');
+      return;
+    }
+    res.status(200).send('User updated');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error updating user');
+  }
+});
+
+app.patch('/updateuser/:id', async (req, res) => { 
+  try {
+    const db = client.db("users");
+    const usersCollection = db.collection("users");
+
+    // Validate the id parameter
+    if (!ObjectId.isValid(req.params.id)) {
+      res.status(400).send('Invalid user ID');
+      return;
+    }
+
+    const updateData = {};
+    if (req.body.firstname) updateData.firstname = req.body.firstname;
+    if (req.body.lastname) updateData.lastname = req.body.lastname;
+    if (req.body.login) updateData.login = req.body.login;
+    if (req.body.password) updateData.password = req.body.password;
+    if (req.body.passwordhint) updateData.passwordhint = req.body.passwordhint;
+    if (req.body.email) updateData.email = req.body.email;
+
+    const result = await usersCollection.updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
+    if (result.matchedCount === 0) {
+      res.status(404).send('User not found');
+      return;
+    }
+    res.status(200).send('User updated');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error updating user');
+  }
+});
 
 app.get('/', (req, res) => {
   res.send('Hello World!')
-})
+});
 
 app.listen(port, () => {
   console.log(`The server is listening on port ${port}`)

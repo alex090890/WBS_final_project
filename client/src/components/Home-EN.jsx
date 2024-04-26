@@ -19,7 +19,7 @@ export default function HomeEN() {
                 </div>
                 <div className="logincomponent">
                     <Button variant="primary" className="regbutton" onClick={() => navigate('/login')}>Login</Button>
-                    <Button variant="primary" className="regbutton">Register</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/register')}>Register</Button>
                 </div>
             </div>
             <div className="hero">

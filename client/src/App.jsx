@@ -8,6 +8,8 @@ import AboutEN from './components/About-EN';
 import AboutDe from './components/About-DE';
 import AboutUA from './components/About-UA';
 import LoginEN from './components/LoginEN';
+import RegistrationEn from './components/RegistrationEn';
+import UserInfo from "./components/UserInfo"
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
@@ -21,6 +23,8 @@ export default function App() {
         <Route path='/de/about' element={<AboutDe />} />
         <Route path='/ua/about' element={<AboutUA />} />
         <Route path='/login' element={<LoginEN />} />
+        <Route path='/register' element={<RegistrationEn />} />
+        <Route path="/user/:id" element={<UserInfo />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>

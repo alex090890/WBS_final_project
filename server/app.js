@@ -2,6 +2,7 @@ import express from 'express';
 import { config } from 'dotenv';
 import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 config();
 
@@ -37,9 +38,9 @@ run().catch(console.dir);
 const port = process.env.PORT || 3000; // add a default port if env variable is not set
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
-const router = express.Router();
 
 //Userslist database
 
@@ -48,6 +49,10 @@ app.post('/newuser', async (req, res) => {
     const { firstname, lastname, login, password, passwordhint, email } = req.body;
     const db = client.db("users");
     const usersCollection = db.collection("users");
+    const existingUser = await usersCollection.findOne({ $or: [{ login }, { email }] });
+    if (existingUser) {
+      return res.status(400).send('Login or email already in use');
+    }
     const creationDate = new Date();
     const result = await usersCollection.insertOne({ firstname, lastname, login, password, passwordhint, email, creationdate: creationDate });
     res.status(201).send(`User created with id: ${result.insertedId}`);
@@ -59,6 +64,7 @@ app.post('/newuser', async (req, res) => {
 
 app.get('/users', async (req, res) => {
   try {
+    if (!client.topology.isConnected()) await client.connect();
     const db = client.db("users");
     const usersCollection = db.collection("users");
     const users = await usersCollection.find({}).toArray();
@@ -189,106 +195,6 @@ app.patch('/updateuser/:id', async (req, res) => {
   }
 });
 
-// Wordslist database
-/*app.post('/newcard', async (req, res) => {
-  try {
-    const { frontside, backside, userId } = req.body;
-    if (!ObjectId.isValid(userId)) {
-      res.status(400).send('Invalid user ID');
-      return;
-    }
-
-    const db = client.db("flashcards");
-    const cardsCollection = db.collection("cards");
-    const creationDate = new Date();
-    const result = await cardsCollection.insertOne({ frontside, backside, creationdate: creationDate, createdby: userId });
-    res.status(201).send(`Card created with id: ${result.insertedId}`);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Error creating a card');
-  }
-});
-
-app.get('/cards/:userId', async (req, res) => {
-  try {
-    const userId = req.params.userId;
-
-    const dbUsers = client.db("users");
-    const usersCollection = dbUsers.collection("users");
-    const user = await usersCollection.findOne({ _id: new ObjectId(userId) });
-    if (!user) {
-      res.status(404).send('User not found');
-      return;
-    }
-
-    const dbFlashcards = client.db("flashcards");
-    const cardsCollection = dbFlashcards.collection("cards");
-    const cards = await cardsCollection.find({ createdby: user._id }).toArray();
-    res.status(200).json(cards);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Error getting cards');
-  }
-});*/
-
-app.post('/newcard', async (req, res) => {
-  try {
-    const { frontside, backside } = req.body;
-    // Implement authentication and authorization to get the current user's login
-    const userLogin = req.authenticatedUser.login; // or however you implement auth
-    const db = flashcardsClient.db("flashcards");
-    const cardsCollection = db.collection("cards");
-    const creationDate = new Date();
-    const result = await cardsCollection.insertOne({ frontside, backside, createdby: userLogin, creationdate: creationDate });
-    res.status(201).send(`Card created with id: ${result.insertedId}`);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Error creating card');
-  }
-});
-
-app.patch('/card/:id', async (req, res) => { 
-  try {
-    const db = flashcardsClient.db("flashcards");
-    const cardsCollection = db.collection("cards");
-
-    // Validate the id parameter
-    if (!ObjectId.isValid(req.params.id)) {
-      res.status(400).send('Invalid card ID');
-      return;
-    }
-
-    const updateData = {};
-    if (req.body.frontside) updateData.frontside = req.body.frontside;
-    if (req.body.backside) updateData.backside = req.body.backside;
-
-    const result = await cardsCollection.updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
-    if (result.matchedCount === 0) {
-      res.status(404).send('Card not found');
-      return;
-    }
-    res.status(200).send('Card updated');
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Error updating Card');
-  }
-});
-
-app.delete('/deletecard/:id', async (req, res) => {
-  try {
-    const db = flashcardsClient.db("flashcards");
-    const cardsCollection = db.collection("cards");
-    const result = await cardsCollection.deleteOne({ _id: new ObjectId(req.params.id) });
-    if (result.deletedCount === 0) {
-      res.status(404).send('Card not found');
-      return;
-    }
-    res.status(200).send('Card deleted');
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Error deleting card');
-  }
-});
 
 
 app.get('/', (req, res) => {

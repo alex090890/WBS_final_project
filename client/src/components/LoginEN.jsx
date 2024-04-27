@@ -47,5 +47,39 @@ export default function LoginEN() {
       }
     }
   };
-
-};
+  return (
+    <div>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Login:
+          <input
+            type="text"
+            name="login"
+            value={state.login}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Email:
+          <input
+            type="text"
+            name="email"
+            value={state.email}
+            onChange={handleInputChange}
+          />
+        </label>
+        <label>
+          Password:
+          <input
+            type="password"
+            name="password"
+            value={state.password}
+            onChange={handleInputChange}
+          />
+        </label>
+        <button type="submit">Login</button>
+      </form>
+      {state.error && <p>{state.error}</p>}
+    </div>
+  );
+}

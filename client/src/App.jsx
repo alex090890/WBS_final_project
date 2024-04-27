@@ -9,7 +9,8 @@ import AboutDe from './components/About-DE';
 import AboutUA from './components/About-UA';
 import LoginEN from './components/LoginEN';
 import RegistrationEn from './components/RegistrationEn';
-import UserInfo from "./components/UserInfo"
+import UserInfo from "./components/UserInfo";
+import Dashboard from "./components/Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         <Route path='/login' element={<LoginEN />} />
         <Route path='/register' element={<RegistrationEn />} />
         <Route path="/user/:id" element={<UserInfo />} />
+        <Route path="/dashboard/:login" element={<Dashboard />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>
     </Router>

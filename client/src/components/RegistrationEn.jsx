@@ -43,7 +43,7 @@ const RegistrationEn = () => {
       setState((prevState) => ({ ...prevState, error: null }));
 
       // Navigate to the user page after successful registration
-      navigate(`/user/${response.data.id}`);
+      navigate(`/dashboard/${newUser.login}`);
 
     } catch (error) {
       if (error.response && error.response.status === 400) {

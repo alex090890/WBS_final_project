@@ -3,9 +3,16 @@ import { config } from 'dotenv';
 import { MongoClient, ServerApiVersion, ObjectId } from 'mongodb';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
+
+
 
 config();
+const jwtSecret = process.env.SECRET_KEY;
 
+console.log(jwtSecret);
 
 const uri = "mongodb+srv://alexprofteach:JANnHALJute10Lsr@cluster0.0ls7xoz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -42,7 +49,21 @@ app.use(cors());
 app.use(bodyParser.json());
 
 
+
+// Создание токена
+const token = jwt.sign({ user_id: '123' }, jwtSecret);
+
+// Проверка токена
+jwt.verify(token, jwtSecret, (err, decoded) => {
+  if (err) {
+    console.log('Token verification failed');
+  } else {
+    console.log('Token verified successfully');
+  }
+});
+
 //Userslist database
+
 
 app.post('/newuser', async (req, res) => {
   try {
@@ -50,13 +71,16 @@ app.post('/newuser', async (req, res) => {
     const db = client.db("users");
     const usersCollection = db.collection("users");
     const existingUser = await usersCollection.findOne({ $or: [{ login }, { email }] });
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
     if (existingUser) {
       return res.status(400).send('Login or email already in use');
     }
+
     const creationDate = new Date();
-    const result = await usersCollection.insertOne({ firstname, lastname, login, password, passwordhint, email, creationdate: creationDate });
+    const result = await usersCollection.insertOne({ firstname, lastname, login, password: hashedPassword, passwordhint, email, creationdate: creationDate });
     res.status(201).send(`User created with id: ${result.insertedId}`);
-  } catch (err) {
+} catch (err) {
     console.log(err);
     res.status(500).send('Error creating user');
   }
@@ -149,6 +173,33 @@ app.get('/userinfo/:login', async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).send('Error getting user');
+  }
+});
+
+
+app.post('/login', async (req, res) => {
+  try {
+    const db = client.db("users");
+    const usersCollection = db.collection("users");
+    const user = await usersCollection.findOne({ login: req.body.login });
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+    // Check the password
+    const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!isValidPassword) {
+      res.status(401).send('Invalid password');
+      return;
+    }
+
+    // Generate a JWT
+    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    res.status(200).send({ token }); // Send the JWT token
+  } catch (err) {
+    console.log(err);
+    res.status(400).send('Error logging in');
   }
 });
 

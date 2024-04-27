@@ -1,42 +1,51 @@
-// Render Prop
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const LoginEN = () => (
-  <div>
-    <h1>Any place in your app!</h1>
-    <Formik
-      initialValues={{ email: '', password: '' }}
-      validate={values => {
-        const errors = {};
-        if (!values.email) {
-          errors.email = 'Required';
-        } else if (
-          !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-        ) {
-          errors.email = 'Invalid email address';
-        }
-        return errors;
-      }}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
-      }}
-    >
-      {({ isSubmitting }) => (
-        <Form>
-          <Field type="email" name="email" />
-          <ErrorMessage name="email" component="div" />
-          <Field type="password" name="password" />
-          <ErrorMessage name="password" component="div" />
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
-        </Form>
-      )}
-    </Formik>
-  </div>
-);
+export default function LoginEN() {
+  const navigate = useNavigate();
+  const [state, setState] = useState({
+    login: "",
+    emaol: "",
+    password: "",
+    error: null,
+  });
 
-export default LoginEN;
+  const handleInputChange = (event) => { 
+    const target = event.target;
+    const value = target.value;
+    const name = target.name;
+
+    setState((prevState) => ({ ...prevState, [name]: value }));
+  }
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { login, email, password } = state;
+
+    const user = {
+      login,
+      email,
+      password,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:3400/login", user);
+      alert(response.data); // handle the response data
+      setState((prevState) => ({ ...prevState, error: null }));
+
+      // Navigate to the user page after successful login
+      navigate(`/dashboard/${user.login}`);
+
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        setState((prevState) => ({ ...prevState, error: error.response.data }));
+      } else {
+        console.log(error);
+        setState((prevState) => ({ ...prevState, error: "An unknown error occurred" }));
+      }
+    }
+  };
+
+};

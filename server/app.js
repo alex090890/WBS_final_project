@@ -133,6 +133,25 @@ app.get('/user/:id', async (req, res) => {
   }
 });
 
+app.get('/userinfo/:login', async (req, res) => {
+  try {
+    const db = client.db("users");
+    const usersCollection = db.collection("users");
+    const user = await usersCollection.findOne({ login: req.params.login }, {
+      projection: { _id: 0 }
+    });
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+    res.json(user); // Send the entire user object back!
+  } catch (err) {
+    console.log(err);
+    res.status(400).send('Error getting user');
+  }
+});
+
 app.put('/updateuser/:id', async (req, res) => {
   try {
     const db = client.db("users");

@@ -41,6 +41,7 @@ export default function UserInfo() {
                 <p>First name: {user.firstname}</p>
                 <p>Last name: {user.lastname}</p>
                 <p>Email: {user.email}</p>
+            <p>ID: { user.id }</p>
             </div>
         )
     }

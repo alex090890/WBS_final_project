@@ -23,6 +23,7 @@ const client = new MongoClient(uri, {
     deprecationErrors: true
   }
 });
+
 const flashcardsClient = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -203,26 +204,30 @@ app.post('/login', async (req, res) => {
   }
 });
 
-app.put('/updateuser/:id', async (req, res) => {
+app.put('/update/:login', async (req, res) => {
   try {
     const db = client.db("users");
     const usersCollection = db.collection("users");
 
-    // Validate the id parameter
-    if (!ObjectId.isValid(req.params.id)) {
-      res.status(400).send('Invalid user ID');
+    // Validate the login parameter
+    const user = await usersCollection.findOne({ login: req.params.login });
+    if (!user) {
+      res.status(404).send('User not found');
       return;
     }
 
     const updateData = {};
     if (req.body.firstname) updateData.firstname = req.body.firstname;
     if (req.body.lastname) updateData.lastname = req.body.lastname;
-    if (req.body.login) updateData.login = req.body.login;
-    if (req.body.password) updateData.password = req.body.password;
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      updateData.password = hashedPassword;
+    }
     if (req.body.passwordhint) updateData.passwordhint = req.body.passwordhint;
     if (req.body.email) updateData.email = req.body.email;
 
-    const result = await usersCollection.updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
+    const result = await usersCollection.updateOne({ login: req.params.login }, { $set: updateData });
     if (result.matchedCount === 0) {
       res.status(404).send('User not found');
       return;
@@ -245,11 +250,21 @@ app.patch('/updateuser/:id', async (req, res) => {
       return;
     }
 
+    const user = await usersCollection.findOne({ _id: new ObjectId(req.params.id) });
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
+    }
+
     const updateData = {};
     if (req.body.firstname) updateData.firstname = req.body.firstname;
     if (req.body.lastname) updateData.lastname = req.body.lastname;
     if (req.body.login) updateData.login = req.body.login;
-    if (req.body.password) updateData.password = req.body.password;
+    if (req.body.password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(req.body.password, salt);
+      updateData.password = hashedPassword;
+    }
     if (req.body.passwordhint) updateData.passwordhint = req.body.passwordhint;
     if (req.body.email) updateData.email = req.body.email;
 
@@ -264,7 +279,6 @@ app.patch('/updateuser/:id', async (req, res) => {
     res.status(500).send('Error updating user');
   }
 });
-
 
 
 app.get('/', (req, res) => {

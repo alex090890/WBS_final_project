@@ -6,7 +6,7 @@ export default function LoginEN() {
   const navigate = useNavigate();
   const [state, setState] = useState({
     login: "",
-    emaol: "",
+    email: "",
     password: "",
     error: null,
   });
@@ -16,13 +16,18 @@ export default function LoginEN() {
     const value = target.value;
     const name = target.name;
 
-    setState((prevState) => ({ ...prevState, [name]: value }));
+    setState((prevState) => ({...prevState, [name]: value }));
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const { login, email, password } = state;
+
+    if (!login) {
+      setState((prevState) => ({...prevState, error: "Login is required" }));
+      return;
+    }
 
     const user = {
       login,
@@ -31,19 +36,19 @@ export default function LoginEN() {
     };
 
     try {
-      const response = await axios.post("http://localhost:3400/login", user);
-      alert(response.data); // handle the response data
-      setState((prevState) => ({ ...prevState, error: null }));
-
+      const response = await axios.post("https://wordweb.vercel.app/login", user);
+      alert('Logged in successfully'); // handle the response
+      setState((prevState) => ({...prevState, error: null }));
+      console.log(response);
       // Navigate to the user page after successful login
-      navigate(`/dashboard/${user.login}`);
+      navigate(`/dashboard/${login}`);
 
     } catch (error) {
       if (error.response && error.response.status === 400) {
-        setState((prevState) => ({ ...prevState, error: error.response.data }));
+        setState((prevState) => ({...prevState, error: error.response.data }));
       } else {
         console.log(error);
-        setState((prevState) => ({ ...prevState, error: "An unknown error occurred" }));
+        setState((prevState) => ({...prevState, error: "An unknown error occurred" }));
       }
     }
   };
@@ -59,15 +64,7 @@ export default function LoginEN() {
             onChange={handleInputChange}
           />
         </label>
-        <label>
-          Email:
-          <input
-            type="text"
-            name="email"
-            value={state.email}
-            onChange={handleInputChange}
-          />
-        </label>
+
         <label>
           Password:
           <input

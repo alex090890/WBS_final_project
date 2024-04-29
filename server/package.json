@@ -5,7 +5,10 @@
   "main": "app.js",
   "private": true,
   "scripts": {
-    "start": "node --watch app.js"
+    "start": "node --watch app.js",
+    "netlify": "netlify dev",
+    "build": "netlify build",
+    "deploy": "netlify deploy"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

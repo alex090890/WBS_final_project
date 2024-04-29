@@ -54,6 +54,7 @@ export default function LoginEN() {
   };
   return (
     <div>
+      <h1>Login to your account</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Login:

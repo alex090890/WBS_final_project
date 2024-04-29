@@ -118,46 +118,6 @@ app.get('/userslist', async (req, res) => {
   }
 });
 
-app.delete('/deleteuser/:id', async (req, res) => {
-  try {
-    const db = client.db("users");
-    const usersCollection = db.collection("users");
-    const result = await usersCollection.deleteOne({ _id: new ObjectId(req.params.id) });
-    if (result.deletedCount === 0) {
-      res.status(404).send('User not found');
-      return;
-    }
-    res.status(200).send('User deleted');
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Error deleting user');
-  }
-});
-
-app.get('/user/:id', async (req, res) => {
-  try {
-    const db = client.db("users");
-    const usersCollection = db.collection("users");
-
-    // Validate the id parameter
-    if (!ObjectId.isValid(req.params.id)) {
-      res.status(400).send('Invalid user ID');
-      return;
-    }
-
-    const user = await usersCollection.findOne({ _id: new ObjectId(req.params.id) }, { projection: { _id: 0 } });
-    if (!user) {
-      res.status(404).send('User not found');
-      return;
-    }
-
-    res.status(200).json(user);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send('Error getting user');
-  }
-});
-
 app.get('/userinfo/:login', async (req, res) => {
   try {
     const db = client.db("users");
@@ -239,18 +199,13 @@ app.put('/update/:login', async (req, res) => {
   }
 });
 
-app.patch('/updateuser/:id', async (req, res) => { 
+app.patch('/update/:login', async (req, res) => { 
   try {
     const db = client.db("users");
     const usersCollection = db.collection("users");
 
-    // Validate the id parameter
-    if (!ObjectId.isValid(req.params.id)) {
-      res.status(400).send('Invalid user ID');
-      return;
-    }
-
-    const user = await usersCollection.findOne({ _id: new ObjectId(req.params.id) });
+    // Validate the login parameter
+    const user = await usersCollection.findOne({ login: req.params.login });
     if (!user) {
       res.status(404).send('User not found');
       return;
@@ -259,7 +214,6 @@ app.patch('/updateuser/:id', async (req, res) => {
     const updateData = {};
     if (req.body.firstname) updateData.firstname = req.body.firstname;
     if (req.body.lastname) updateData.lastname = req.body.lastname;
-    if (req.body.login) updateData.login = req.body.login;
     if (req.body.password) {
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -268,7 +222,7 @@ app.patch('/updateuser/:id', async (req, res) => {
     if (req.body.passwordhint) updateData.passwordhint = req.body.passwordhint;
     if (req.body.email) updateData.email = req.body.email;
 
-    const result = await usersCollection.updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
+    const result = await usersCollection.updateOne({ login: req.params.login }, { $set: updateData });
     if (result.matchedCount === 0) {
       res.status(404).send('User not found');
       return;
@@ -278,7 +232,25 @@ app.patch('/updateuser/:id', async (req, res) => {
     console.log(err);
     res.status(500).send('Error updating user');
   }
+})
+
+app.delete('/delete/:login', async (req, res) => {
+  try {
+    const db = client.db("users");
+    const usersCollection = db.collection("users");
+    const result = await usersCollection.deleteOne({ login: req.params.login });
+    if (result.deletedCount === 0) {
+      res.status(404).send('User not found');
+      return;
+    }
+    res.status(200).send('User deleted');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error deleting user');
+  }
 });
+
+
 
 
 app.get('/', (req, res) => {

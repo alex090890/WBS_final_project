@@ -38,7 +38,7 @@ const RegistrationEn = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:3400/newuser', newUser);
+      const response = await axios.post('https://wordweb.vercel.app/newuser', newUser);
       alert(response.data); // handle the response data
       setState((prevState) => ({ ...prevState, error: null }));
 

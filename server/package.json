@@ -7,8 +7,8 @@
   "scripts": {
     "start": "node --watch app.js",
     "netlify": "netlify dev",
-    "build": "netlify build",
-    "deploy": "netlify deploy"
+    "build": "npm run build",
+    "deploy": "npm run deploy"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

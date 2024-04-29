@@ -250,8 +250,130 @@ app.delete('/delete/:login', async (req, res) => {
   }
 });
 
+app.post('/newcard', async (req, res) => {
+  try {
+    const { login, front, back } = req.body;
+    const usersDb = client.db("users");
+    const usersCollection = usersDb.collection("users");
+    const user = await usersCollection.findOne({ login });
+    if (!user) {
+      return res.status(404).send('User not found');
+    }
 
+    const flashcardsDb = client.db("flashcards");
+    const cardsCollection = flashcardsDb.collection("cards");
+    const newCard = { front, back, owner: user.login };
+    const result = await cardsCollection.insertOne(newCard);
+    res.status(201).send(`Card created with id: ${result.insertedId}`);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error creating card');
+  }
+});
 
+app.get('/cards/:login', async (req, res) => {
+  try {
+    const flashcardsDb = client.db("flashcards");
+    const cardsCollection = flashcardsDb.collection("cards");
+    const cards = await cardsCollection.find({ owner: req.params.login }).toArray();
+    res.status(200).json(cards);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error getting cards');
+  }
+});
+
+app.get('/cardslist', async (req, res) => {
+  try {
+    const flashcardsDb = client.db("flashcards");
+    const cardsCollection = flashcardsDb.collection("cards");
+    const cards = await cardsCollection.find({}).toArray();
+    res.status(200).json(cards);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error getting cards');
+  }
+});
+
+app.patch('/updatecard/:login', async (req, res) => {
+  try {
+    const flashcardsDb = client.db("flashcards");
+    const cardsCollection = flashcardsDb.collection("cards");
+    const card = await cardsCollection.findOne({ owner: req.params.login });
+    if (!card) {
+      res.status(404).send('Card not found');
+      return;
+    }
+
+    const updateData = {};
+    if (req.body.front) updateData.front = req.body.front;
+    if (req.body.back) updateData.back = req.body.back;
+
+    const result = await cardsCollection.updateOne({ owner: req.params.login }, { $set: updateData });
+    if (result.matchedCount === 0) {
+      res.status(404).send('Card not found');
+      return;
+    }
+    res.status(200).send('Card updated');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error updating card');
+  }
+});
+
+app.patch('/update-card/:id', async (req, res) => {
+  try {
+    const flashcardsDb = client.db("flashcards");
+    const cardsCollection = flashcardsDb.collection("cards");
+    const card = await cardsCollection.findOne({ _id: new ObjectId(req.params.id) });
+    if (!card) {
+      res.status(404).send('Card not found');
+      return;
+    }
+
+    const updateData = {};
+    if (req.body.front) updateData.front = req.body.front;
+    if (req.body.back) updateData.back = req.body.back;
+
+    const result = await cardsCollection.updateOne({ _id: new ObjectId(req.params.id) }, { $set: updateData });
+    if (result.matchedCount === 0) {
+      res.status(404).send('Card not found');
+      return;
+    }
+    res.status(200).send('Card updated');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error updating card');
+  }
+});
+
+app.delete('/deleteallcards/:login', (req, res) => {
+  try {
+    const flashcardsDb = client.db("flashcards");
+    const cardsCollection = flashcardsDb.collection("cards");
+    cardsCollection.deleteMany({ owner: req.params.login });
+    res.status(200).send('Cards deleted');
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error deleting cards');
+  }
+});
+
+app.delete('/deletecard/:id', async (req, res) => {
+  try {
+    const flashcardsDb = client.db("flashcards");
+    const cardsCollection = flashcardsDb.collection("cards");
+    const result = await cardsCollection.deleteOne({ _id: new ObjectId(req.params.id) });
+    if (result.deletedCount === 0) {
+      res.status(404).send('Card not found');
+      return;
+    }
+    res.status(200).send('Card deleted');
+  } catch {
+    console.log(err);
+    res.status(500).send('Error deleting card');
+  }
+});
 
 app.get('/', (req, res) => {
   res.send('Welcome to the WordWeb database')

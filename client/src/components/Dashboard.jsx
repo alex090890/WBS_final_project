@@ -131,7 +131,7 @@ export default function Dashboard() {
           <AddCard />
       </TabPanel>
       <TabPanel value={value} index={3}>
-          <h2>Your cards</h2>
+          <h2>View your cards</h2>
           <CardsList />
       </TabPanel>
       <TabPanel value={value} index={4}>

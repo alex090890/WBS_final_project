@@ -37,7 +37,7 @@ export default function LoginEN() {
 
     try {
       const response = await axios.post("https://wordweb.vercel.app/login", user);
-      alert('Logged in successfully'); // handle the response
+      alert(`Welcome back, ${user.login}!`); // handle the response
       setState((prevState) => ({...prevState, error: null }));
       console.log(response);
       // Navigate to the user page after successful login

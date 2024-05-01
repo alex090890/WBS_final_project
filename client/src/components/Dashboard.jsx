@@ -4,10 +4,11 @@ import { useParams, useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import AddCard from "./AddCard";
 import CardsList from "./CardsList";
+import RemoveAllCards from "./RemoveAllCards";
+import CurrentDate from "./CurrentDate";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,7 +23,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          <div>{children}</div>
         </Box>
       )}
     </div>
@@ -95,7 +96,7 @@ export default function Dashboard() {
   } else {
     return (
     <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: 224 }}
+      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh' }}
     >
       <Tabs
         orientation="vertical"
@@ -115,20 +116,22 @@ export default function Dashboard() {
       </Tabs>
       <TabPanel value={value} index={0}>
         <div>
-        <h1>{user.firstname} {user.lastname}</h1>
-        <p>{user.login}</p>
-        <p>{user.email}</p>
+            <h1>Welcome, {user.firstname} {user.lastname}</h1>
+            <CurrentDate />
+        <p>Login: {user.login}</p>
+        <p>Email: {user.email}</p>
         
         <button className="regbutton" onClick={() => navigate('/')}>Logout</button>
       </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <h2>Are xou sure you want to delete your account?</h2>
-        <button onClick={deleteUser}>Delete account</button>
+          <button onClick={deleteUser}>Delete account</button>
+          <RemoveAllCards />
       </TabPanel>
       <TabPanel value={value} index={2}>
           <h2>Add a new card</h2>
-          <AddCard />
+          <Box><AddCard /></Box>
       </TabPanel>
       <TabPanel value={value} index={3}>
           <h2>View your cards</h2>

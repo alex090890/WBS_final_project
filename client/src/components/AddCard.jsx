@@ -53,7 +53,8 @@ export default function AddCard() {
   };
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <div>
+        <form onSubmit={handleSubmit}>
         <label>
           Front Side:
           <input
@@ -76,8 +77,10 @@ export default function AddCard() {
               
 
 
-        <button type="submit">Save the card</button>
+          <button type="submit">Save the card</button>
+          
       </form>
+      </div>
           {state.error && <p>{state.error}</p>}
           {state.success && <p style={{ color: 'green' }}>{state.success}</p>}
     </div>

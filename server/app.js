@@ -262,9 +262,15 @@ app.post('/newcard', async (req, res) => {
 
     const flashcardsDb = client.db("flashcards");
     const cardsCollection = flashcardsDb.collection("cards");
-    const newCard = { front, back, owner: user.login };
+    const creationDate = new Date();
+    const day = creationDate.getDate();
+    const month = creationDate.getMonth() + 1; // months are 0-based, so add 1
+    const year = creationDate.getFullYear();
+    const formattedCreationDate = `${day}-${month}-${year}`;
+    const newCard = { front, back, owner: user.login, creationdate: formattedCreationDate };
     const result = await cardsCollection.insertOne(newCard);
     res.status(201).send(`Card created with id: ${result.insertedId}`);
+    console.log(formattedCreationDate);
   } catch (err) {
     console.log(err);
     res.status(500).send('Error creating card');

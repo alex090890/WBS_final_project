@@ -269,7 +269,7 @@ app.post('/newcard', async (req, res) => {
     const formattedCreationDate = `${day}-${month}-${year}`;
     const newCard = { front, back, owner: user.login, creationdate: formattedCreationDate };
     const result = await cardsCollection.insertOne(newCard);
-    res.status(201).send(`Card created with id: ${result.insertedId}`);
+    res.status(201).send(`Card created with id: ${result.insertedId}, creation date ${formattedCreationDate}`);
     console.log(formattedCreationDate);
   } catch (err) {
     console.log(err);

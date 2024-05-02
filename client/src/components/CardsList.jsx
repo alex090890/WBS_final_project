@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import ReactCardFlip from "react-card-flip";
 
 export default function CardsList() {
   const { login } = useParams();
@@ -87,49 +88,55 @@ export default function CardsList() {
   } else {
     return (
       <div>
-        <h1>{login}&#39;s Cards</h1>
-        <ul>
-          {cards.map((card) => (
-            <li key={card._id}
-              onMouseOver={() => setShowDelete({...showDelete, [card._id]: true })}
-              onMouseOut={() => setShowDelete({...showDelete, [card._id]: false })}
-              >
-              <p style={{
-                backgroundColor: getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
-                                getCardAge(card.creationdate).diffInDays >= 2 ? 'yellow' :
+  <h1>{login}&#39;s Cards</h1>
+  <ul>
+    {cards.map((card) => (
+      <ReactCardFlip key={card._id}>
+        <li
+          onMouseOver={() => setShowDelete({...showDelete, [card._id]: true })}
+          onMouseOut={() => setShowDelete({...showDelete, [card._id]: false })}
+        >
+          <div className="card-front">
+            <p style={{
+              backgroundColor: getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
+                            getCardAge(card.creationdate).diffInDays >= 2 ? 'yellow' :
                           getCardAge(card.creationdate).diffInDays >= 1 ? 'grey' :
                               getCardAge(card.creationdate).diffInDays >= 0 ? 'blue' :
                                 'white'
-              }}>{card.front}</p>
-              <p>{card.back}</p>
-              <p>{card.creationdate}</p>
-              {showDelete[card._id] && (
-                <button onClick={() => handleDelete(card._id)}>Delete</button>
-              )}
-             {showDelete[card._id] && (
-                <button onClick={() => handleUpdate(card._id)}>Update</button>
-              )}
-              {showUpdate[card._id] && (
-                <form>
-                  <label>Front:</label>
-                  <input type="text" defaultValue={card.front} />
-                  <br />
-                  <label>Back:</label>
-                  <input type="text" defaultValue={card.back} />
-                  <br />
-                  <button onClick={(e) => {
-                    e.preventDefault();
-                    const front = e.target.form[0].value;
-                    const back = e.target.form[1].value;
-                    handleSaveUpdate(card._id, front, back);
-                  }}>Save</button>
-                  <button onClick={() => handleCancelUpdate(card._id)}>Cancel</button>
-                </form>
-              )}
-            </li>
-          ))}
-        </ul>
-      </div>
+            }}>{card.front}</p>
+            <p>{card.back}</p>
+            <p>{card.creationdate}</p>
+          </div>
+          {showDelete[card._id] && (
+            <button onClick={() => handleDelete(card._id)}>Delete</button>
+          )}
+          {showUpdate[card._id] && (
+            <button onClick={() => handleUpdate(card._id)}>Update</button>
+          )}
+        </li>
+        <li>
+          <div className="card-back">
+            <form>
+              <label>Front:</label>
+              <input type="text" defaultValue={card.front} />
+              <br />
+              <label>Back:</label>
+              <input type="text" defaultValue={card.back} />
+              <br />
+              <button onClick={(e) => {
+                e.preventDefault();
+                const front = e.target.form[0].value;
+                const back = e.target.form[1].value;
+                handleSaveUpdate(card._id, front, back);
+              }}>Save</button>
+              <button onClick={() => handleCancelUpdate(card._id)}>Cancel</button>
+            </form>
+          </div>
+        </li>
+      </ReactCardFlip>
+    ))}
+  </ul>
+</div>
     )
   }
 }

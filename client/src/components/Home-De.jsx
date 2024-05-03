@@ -5,9 +5,9 @@ export default function HomeEN() {
     return (
         <div>
             <div className='languageswitcher'>
-                <a href="/" className='lang'><img src='../public/united-states-of-america.png' className="langimg" /></a>
-                <a href="/de" className='lang'><img src='../public/germany.png' className='langimg' /></a>
-                <a href="/ua" className='lang'><img src='../public/ukraine.png' className='langimg' /></a>
+                <a href="/" className='lang'><img src='/united-states-of-america.png' className="langimg" /></a>
+                <a href="/de" className='lang'><img src='/germany.png' className='langimg' /></a>
+                <a href="/ua" className='lang'><img src='/ukraine.png' className='langimg' /></a>
             </div>
             <div className="header">
                 <div>

@@ -39,8 +39,8 @@ export default function HomeEN() {
                     <li>An exam countdown that is a good reminder and motivator</li>
                 </ul>
                 <div className="logincomponent">
-                    <Button variant="primary" className="regbutton">Login</Button>
-                    <Button variant="primary" className="regbutton">Register</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/login')}>Login</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/register')}>Register</Button>
                 </div>
             </div>
             <Footer />

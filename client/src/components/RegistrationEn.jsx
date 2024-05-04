@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Input } from 'antd';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 const RegistrationEn = () => {
   
@@ -56,45 +58,59 @@ const RegistrationEn = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
+      <div>
+        <img  className="login-img" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      </div>
+      <div className="reg-form-container">
+        <h1>Create a new account</h1>
       <form onSubmit={handleSubmit}>
         <label>
           First Name:
-          <input
-            type="text"
+          <Input
+              type="text"
+              className='login-input'
             name="firstname"
             value={state.firstname}
             onChange={handleInputChange}
           />
-        </label>
+          </label>
+          <br />
         <label>
           Last Name:
-          <input
-            type="text"
+          <Input
+              type="text"
+              className='login-input'
             name="lastname"
             value={state.lastname}
             onChange={handleInputChange}
           />
-        </label>
+          </label>
+          <br />
         <label>
           Login:
-          <input
+            <Input
+              className='login-input'
             type="text"
             name="login"
             value={state.login}
             onChange={handleInputChange}
           />
-        </label>
+          </label>
+          <br />
         <label>
           Password:
-          <input
+            <Input.Password
+              className='login-input'
             type="password"
             name="password"
             value={state.password}
-            onChange={handleInputChange}
+              onChange={handleInputChange}
+              iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
-        </label>
-        <label>
+          </label>
+          <br />
+        {/* <label>
           Password Hint:
           <input
             type="text"
@@ -102,19 +118,25 @@ const RegistrationEn = () => {
             value={state.passwordHint}
             onChange={handleInputChange}
           />
-        </label>
+        </label> */}
         <label>
           Email:
-          <input
+            <Input
+              className='login-input'
             type="email"
             name="email"
             value={state.email}
             onChange={handleInputChange}
           />
-        </label>
-        <button type="submit">Register</button>
+          </label>
+          <br />
+        <button className="login-btn1" type="submit">Register</button>
         {state.error && <p>{state.error}</p>}
-      </form>
+        </form>
+        <hr />
+        <p>Already have an account?</p>
+        <button className="login-btn1" onClick={() => navigate('/login')}>Login</button>
+    </div>
     </div>
   );
 };

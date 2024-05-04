@@ -1,6 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Input } from 'antd';
+import { UserOutlined } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { RiLockPasswordLine } from "react-icons/ri";
+
 
 export default function LoginEN() {
   const navigate = useNavigate();
@@ -53,31 +58,48 @@ export default function LoginEN() {
     }
   };
   return (
-    <div>
-      <h1>Login to your account</h1>
+    <div className="login-container">
+      <div>
+        <img  className="login-img" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
+      </div>
+      <div className="login-form-container">
+        <h1>Login to your account</h1>
       <form onSubmit={handleSubmit}>
         <label>
           Login:
-          <input
+            <Input
+              prefix={<UserOutlined />}
+              placeholder="Enter your username"
             type="text"
             name="login"
             value={state.login}
-            onChange={handleInputChange}
+              onChange={handleInputChange}
+              className="login-input"
           />
         </label>
-
+        <br />
         <label>
           Password:
-          <input
+            <Input.Password
+              placeholder="Enter your password"
+              prefix={<RiLockPasswordLine />}
             type="password"
             name="password"
             value={state.password}
-            onChange={handleInputChange}
+              onChange={handleInputChange}
+              className="login-input"
+            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
         </label>
-        <button type="submit">Login</button>
+          <br />
+          <button className="login-btn1">Login</button>
       </form>
-      {state.error && <p>{state.error}</p>}
+        {state.error && <p>{state.error}</p>}
+        <p>* Forgot your password? Send an email to <a href="mailto: alexprof_web.de" target="_blank">alex_prof@web.de</a></p>
+        <hr />
+        <p>Don&#39;t have an account?</p>
+        <button className="login-btn1" onClick={() => navigate('/register')}>Sign Up</button>
+      </div>
     </div>
   );
 }

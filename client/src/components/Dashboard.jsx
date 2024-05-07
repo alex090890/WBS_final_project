@@ -11,12 +11,12 @@ import RemoveAllCards from "./RemoveAllCards";
 import CurrentDate from "./CurrentDate";
 
 function TabPanel(props) {
-  const { children, value, index, ...other } = props;
+  const { children, value, index,...other } = props;
 
   return (
     <div
       role="tabpanel"
-      hidden={value !== index}
+      hidden={value!== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
       {...other}
@@ -36,25 +36,13 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
-
-
-
-export default function Dashboard() {
+function Dashboard() {
   const { login } = useParams();
-  const [user, setUser] = useState(null);
   const navigate = useNavigate();
-    const [value, setValue] = useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
+  const [user, setUser] = useState(null);
+  const [value, setValue] = useState(0);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     if (!login) return;
@@ -62,7 +50,7 @@ export default function Dashboard() {
     axios.get(`https://wordweb.vercel.app/userinfo/${login}`)
      .then((response) => {
         if (response.data) {
-          setUser(response.data)
+          setUser(response.data);
         } else {
           setUser('not found');
         }
@@ -75,7 +63,7 @@ export default function Dashboard() {
           setUser(null);
           console.error('Unexpected error:', error);
         }
-      })
+      });
   }, [login]);
 
   const deleteUser = async () => {
@@ -89,64 +77,96 @@ export default function Dashboard() {
     }
   };
 
+  const handleUpdate = () => {
+    setIsUpdating(true);
+  };
+
+  const handleSaveUpdate = (firstname, lastname, password, email) => {
+    axios.patch(`https://wordweb.vercel.app/update/${login}`, { login, firstname, lastname, password, email })
+     .then(() => {
+        setUser({...user, firstname, lastname, password, email });
+        setIsUpdating(false);
+      })
+     .catch((error) => {
+        console.log(error);
+        setError('Error updating card');
+      });
+  };
+
+  const handleCancelUpdate = () => {
+    setIsUpdating(false);
+  };
+
   if (!user) {
-    return <p>Loading...</p>
-  } else if (user === 'not found') {
-    return <p>User is not found</p>
+    return <p>Loading...</p>;
+  } else if (error) {
+    return <p>User is not found</p>;
   } else {
     return (
-    <Box
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh' }}
-    >
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        sx={{ borderRight: 1, borderColor: 'divider' }}
-      >
-        <Tab label="Dashboard" {...a11yProps(0)} />
-        <Tab label="Danger Zone" {...a11yProps(1)} />
-        <Tab label="New Card" {...a11yProps(2)} />
-        <Tab label="Your cards" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-        <Tab label="Item Seven" {...a11yProps(6)} />
-      </Tabs>
-      <TabPanel value={value} index={0}>
-        <div>
+      <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh' }}>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={(event, newValue) => setValue(newValue)}
+          aria-label="Vertical tabs example"
+          sx={{ borderRight: 1, borderColor: 'divider' }}
+        >
+          <Tab label="Dashboard" />
+          <Tab label="Danger Zone" />
+          <Tab label="New Card" />
+          <Tab label="Your cards" />
+          <Tab label="Item Five" />
+          <Tab label="Item Six" />
+          <Tab label="Item Seven" />
+        </Tabs>
+        <TabPanel value={value} index={0}>
+          <div>
             <h1>Welcome, {user.firstname} {user.lastname}</h1>
             <CurrentDate />
-        <p>Login: {user.login}</p>
-        <p>Email: {user.email}</p>
-        
-        <button className="regbutton" onClick={() => navigate('/')}>Logout</button>
-      </div>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <h2>Are xou sure you want to delete your account?</h2>
+            <p>Login: {user.login}</p>
+            <p>Email: {user.email}</p>
+            <button className="regbutton" onClick={() => navigate('/')}>Logout</button>
+            <button onClick={handleUpdate}>Update</button>
+            {isUpdating && (
+              <form>
+                <label>First Name:</label>
+                <input type="text" defaultValue={user.firstname} />
+                <button onClick={(e) => {
+                  e.preventDefault();
+                  const firstname = e.target.form[0].value;
+                  handleSaveUpdate(firstname, user.lastname, user.password, user.email);
+                }}>Save</button>
+                <button onClick={handleCancelUpdate}>Cancel</button>
+              </form>
+            )}
+          </div>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <h2>Are you sure you want to delete your account?</h2>
           <button onClick={deleteUser}>Delete account</button>
           <RemoveAllCards />
-      </TabPanel>
-      <TabPanel value={value} index={2}>
+        </TabPanel>
+        <TabPanel value={value} index={2}>
           <h2>Add a new card</h2>
           <Box><AddCard /></Box>
-      </TabPanel>
-      <TabPanel value={value} index={3}>
+        </TabPanel>
+        <TabPanel value={value} index={3}>
           <h2>View your cards</h2>
           <CardsList />
-      </TabPanel>
-      <TabPanel value={value} index={4}>
-        Item Five
-      </TabPanel>
-      <TabPanel value={value} index={5}>
-        Item Six
-      </TabPanel>
-      <TabPanel value={value} index={6}>
-        Item Seven
-      </TabPanel>
-    </Box>
-  );
+        </TabPanel>
+        <TabPanel value={value} index={4}>
+          Item Five
+        </TabPanel>
+        <TabPanel value={value} index={5}>
+          Item Six
+        </TabPanel>
+        <TabPanel value={value} index={6}>
+          Item Seven
+        </TabPanel>
+      </Box>
+    );
   }
 }
+
+export default Dashboard;

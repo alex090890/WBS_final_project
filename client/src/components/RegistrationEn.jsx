@@ -2,7 +2,8 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Input } from 'antd';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined, MailOutlined } from '@ant-design/icons';
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const RegistrationEn = () => {
   
@@ -73,6 +74,8 @@ const RegistrationEn = () => {
             name="firstname"
             value={state.firstname}
             onChange={handleInputChange}
+              placeholder="John"
+              prefix={<UserOutlined />}
           />
           </label>
           <br />
@@ -83,7 +86,9 @@ const RegistrationEn = () => {
               className='login-input'
             name="lastname"
             value={state.lastname}
-            onChange={handleInputChange}
+              onChange={handleInputChange}
+              placeholder='Black'
+              prefix={<UserOutlined />}
           />
           </label>
           <br />
@@ -94,7 +99,9 @@ const RegistrationEn = () => {
             type="text"
             name="login"
             value={state.login}
-            onChange={handleInputChange}
+              onChange={handleInputChange}
+              placeholder='JohnBlack'
+              prefix={<UserOutlined />}
           />
           </label>
           <br />
@@ -107,18 +114,11 @@ const RegistrationEn = () => {
             value={state.password}
               onChange={handleInputChange}
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+              placeholder='Create a strong password'
+              prefix={<RiLockPasswordLine />}
           />
           </label>
           <br />
-        {/* <label>
-          Password Hint:
-          <input
-            type="text"
-            name="passwordHint"
-            value={state.passwordHint}
-            onChange={handleInputChange}
-          />
-        </label> */}
         <label>
           Email:
             <Input
@@ -126,7 +126,9 @@ const RegistrationEn = () => {
             type="email"
             name="email"
             value={state.email}
-            onChange={handleInputChange}
+              onChange={handleInputChange}
+              placeholder='john@black.com'
+              prefix={<MailOutlined />}
           />
           </label>
           <br />

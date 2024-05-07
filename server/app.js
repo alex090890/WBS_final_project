@@ -214,12 +214,12 @@ app.patch('/update/:login', async (req, res) => {
     const updateData = {};
     if (req.body.firstname) updateData.firstname = req.body.firstname;
     if (req.body.lastname) updateData.lastname = req.body.lastname;
-    if (req.body.password) {
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hash(req.body.password, salt);
-      updateData.password = hashedPassword;
-    }
-    if (req.body.passwordhint) updateData.passwordhint = req.body.passwordhint;
+    // Password update functionality
+    // if (req.body.password) {
+    //   const salt = await bcrypt.genSalt(10);
+    //   const hashedPassword = await bcrypt.hash(req.body.password, salt);
+    //   updateData.password = hashedPassword;
+    // }
     if (req.body.email) updateData.email = req.body.email;
 
     const result = await usersCollection.updateOne({ login: req.params.login }, { $set: updateData });
@@ -232,7 +232,48 @@ app.patch('/update/:login', async (req, res) => {
     console.log(err);
     res.status(500).send('Error updating user');
   }
-})
+});
+
+app.patch('/update-password/:login', async (req, res) => {
+  try {
+    const db = client.db("users");
+    const usersCollection = db.collection("users");
+
+    // Validate the login parameter
+    const user = await usersCollection.findOne({ login: req.params.login });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Validate input
+    if (!req.body.password) {
+      return res.status(400).json({ error: 'Password is required' });
+    }
+
+    // Update password
+    const updatedUser = await updatePassword(usersCollection, req.params.login, req.body.password);
+    if (!updatedUser) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User updated' });
+  } catch (err) {
+    // Secure logging mechanism
+    logger.error(err);
+    res.status(500).json({ error: 'Error updating user' });
+  }
+});
+
+async function updatePassword(usersCollection, login, password) {
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+  const updateData = { password: hashedPassword };
+
+  const result = await usersCollection.updateOne({ login }, { $set: updateData });
+  return result.matchedCount > 0? true : false;
+}
+
+
 
 app.delete('/delete/:login', async (req, res) => {
   try {

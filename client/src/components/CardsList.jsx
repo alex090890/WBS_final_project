@@ -9,7 +9,7 @@ export default function CardsList() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showDelete, setShowDelete] = useState({});
-    const [showUpdate, setShowUpdate] = useState({});
+  const [showUpdate, setShowUpdate] = useState({});
 
 
   useEffect(() => {

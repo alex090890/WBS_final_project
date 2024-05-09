@@ -138,12 +138,12 @@ export default function CardsList() {
               {showDelete[card._id] && (
                 <div>
                   <p>Added on {card.creationdate}</p>
-                  <button className="login-btn1" onClick={() => handleDelete(card._id)}>🗑</button>
-                  <button className="login-btn1" onClick={() => handleUpdate(card._id)}>🖊</button>
-                  <button className="login-btn1" onClick={() => isCardLearned(card._id, "😀")}>😀</button>
-                  <button className="login-btn1" onClick={() => isCardLearned(card._id, "😐")}>😐</button>
-                  <button className="login-btn1" onClick={() => isCardLearned(card._id, "😒")}>😒</button>
-                  <button className="login-btn1" onClick={() => isCardLearned(card._id, "✅")}>✅</button>
+                  <button onClick={() => handleDelete(card._id)} title="Delete">🗑</button>
+                  <button onClick={() => handleUpdate(card._id)} title="Update">🖊</button>
+                  <button onClick={() => isCardLearned(card._id, "😀")} title="Good">😀</button>
+                  <button onClick={() => isCardLearned(card._id, "😐")} title="So-so">😐</button>
+                  <button onClick={() => isCardLearned(card._id, "😒")} title="Bad">😒</button>
+                  <button onClick={() => isCardLearned(card._id, "✅")} title="I have mastered it!">✅</button>
                 </div>
               )}
               {showUpdate[card._id] && (

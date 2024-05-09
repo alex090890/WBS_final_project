@@ -7,7 +7,7 @@ export default function CardsList() {
   const [cards, setCards] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  // const [showDelete, setShowDelete] = useState({});
+  const [showDelete, setShowDelete] = useState({});
   const [showUpdate, setShowUpdate] = useState({});
   const [showBack, setShowBack] = useState({});
 
@@ -109,8 +109,8 @@ export default function CardsList() {
         <ul className="cards-list">
           {cards.map((card) => (
             <li key={card._id}
-              // onMouseOver={() => setShowDelete({...showDelete, [card._id]: true })}
-              // onMouseOut={() => setShowDelete({...showDelete, [card._id]: false })}
+              onMouseOver={() => setShowDelete({...showDelete, [card._id]: true })}
+              onMouseOut={() => setShowDelete({...showDelete, [card._id]: false })}
               onClick={() => toggleCardSide(card._id)}
               style={{ cursor: 'pointer' }}
             >
@@ -133,12 +133,19 @@ export default function CardsList() {
                               'white'
               }}></div></p>
                 )}
-                <p>Added on {card.creationdate}</p>
-                  <button onClick={() => handleDelete(card._id)}>Delete</button>
-                  <button onClick={() => handleUpdate(card._id)}>Update</button>
-                  <button onClick={() => isCardLearned(card._id, "😀")}>😀</button>
-                  <button onClick={() => isCardLearned(card._id, "😒")}>😒</button>
+                
               </div>
+              {showDelete[card._id] && (
+                <div>
+                  <p>Added on {card.creationdate}</p>
+                  <button className="login-btn1" onClick={() => handleDelete(card._id)}>🗑</button>
+                  <button className="login-btn1" onClick={() => handleUpdate(card._id)}>🖊</button>
+                  <button className="login-btn1" onClick={() => isCardLearned(card._id, "😀")}>😀</button>
+                  <button className="login-btn1" onClick={() => isCardLearned(card._id, "😐")}>😐</button>
+                  <button className="login-btn1" onClick={() => isCardLearned(card._id, "😒")}>😒</button>
+                  <button className="login-btn1" onClick={() => isCardLearned(card._id, "✅")}>✅</button>
+                </div>
+              )}
               {showUpdate[card._id] && (
                 <form>
                   <label>Front:</label>

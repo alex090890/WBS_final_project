@@ -322,7 +322,7 @@ app.get('/cards/:login', async (req, res) => {
   try {
     const flashcardsDb = client.db("flashcards");
     const cardsCollection = flashcardsDb.collection("cards");
-    const cards = await cardsCollection.find({ owner: req.params.login }).toArray();
+    const cards = await cardsCollection.find({ owner: req.params.login }).sort({ front: 1 }).toArray();
     res.status(200).json(cards);
   } catch (err) {
     console.log(err);
@@ -334,7 +334,7 @@ app.get('/cardslist', async (req, res) => {
   try {
     const flashcardsDb = client.db("flashcards");
     const cardsCollection = flashcardsDb.collection("cards");
-    const cards = await cardsCollection.find({}).toArray();
+    const cards = await cardsCollection.find({}).sort({ front: 1 }).toArray();
     res.status(200).json(cards);
   } catch (err) {
     console.log(err);

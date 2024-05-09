@@ -116,9 +116,6 @@ function Dashboard() {
           <Tab label="Danger Zone" />
           <Tab label="New Card" />
           <Tab label="Your cards" />
-          <Tab label="Item Five" />
-          <Tab label="Item Six" />
-          <Tab label="Item Seven" />
         </Tabs>
         <TabPanel value={value} index={0}>
           <div>
@@ -132,6 +129,13 @@ function Dashboard() {
               <form>
                 <label>First Name:</label>
                 <input type="text" defaultValue={user.firstname} />
+                <br />
+                <label>Last Name</label>
+                <input type="text" defaultValue={user.lastname} />
+                <br />
+                <label>Email</label>
+                <input type="text" defaultValue={user.email} />
+                <br />
                 <button onClick={(e) => {
                   e.preventDefault();
                   const firstname = e.target.form[0].value;
@@ -143,8 +147,10 @@ function Dashboard() {
           </div>
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <h2>Are you sure you want to delete your account?</h2>
+          <h2>Delete your account</h2>
+          <p>This process is unreversable. </p>
           <button onClick={deleteUser}>Delete account</button>
+          <h2>Delete all your cards</h2>
           <RemoveAllCards />
         </TabPanel>
         <TabPanel value={value} index={2}>
@@ -154,15 +160,6 @@ function Dashboard() {
         <TabPanel value={value} index={3}>
           <h2>View your cards</h2>
           <CardsList />
-        </TabPanel>
-        <TabPanel value={value} index={4}>
-          Item Five
-        </TabPanel>
-        <TabPanel value={value} index={5}>
-          Item Six
-        </TabPanel>
-        <TabPanel value={value} index={6}>
-          Item Seven
         </TabPanel>
       </Box>
     );

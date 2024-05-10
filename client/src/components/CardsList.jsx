@@ -88,6 +88,9 @@ export default function CardList () {
       .then(() => {
         const updatedCard = cards.find((card) => card._id === id);
         updatedCard.isCardLearned = learned;
+        if (learned === "✅") {
+          updatedCard.mastered = true;
+        }
         setCards([...cards]);
       })
       .catch((error) => {
@@ -105,7 +108,6 @@ export default function CardList () {
   } else {
     return (
       <div>
-        <h1>{login}'s Cards</h1>
         <ul className="cards-list">
           {cards.map((card) => (
             <li key={card._id}
@@ -116,16 +118,16 @@ export default function CardList () {
             >
               <div className="flashcard-item">
                 {showBack[card._id] ? (
-                  <p className="front-side">{card.front} {card.isCardLearned}<div className="reviewTime" style={{
-                    backgroundColor: getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
+                  <p className={"front-side"}>{card.front} {card.isCardLearned}<div className="reviewTime" style={{
+                    backgroundColor: card.mastered ? 'white' : getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
                       getCardAge(card.creationdate).diffInDays >= 2 ? 'yellow' :
                       getCardAge(card.creationdate).diffInDays >= 1 ? 'grey' :
                       getCardAge(card.creationdate).diffInDays >= 0 ? 'blue' :
                       'white'
                   }}></div></p>
                 ) : (
-                  <p className="back-side">{card.back} {card.isCardLearned}<div className="reviewTime" style={{
-                    backgroundColor: getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
+                  <p className={"back-side"}>{card.back} {card.isCardLearned}<div className="reviewTime" style={{
+                    backgroundColor: card.mastered ? 'white' : getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
                       getCardAge(card.creationdate).diffInDays >= 2 ? 'yellow' :
                       getCardAge(card.creationdate).diffInDays >= 1 ? 'grey' :
                       getCardAge(card.creationdate).diffInDays >= 0 ? 'blue' :

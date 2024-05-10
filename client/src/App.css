@@ -138,8 +138,11 @@ label {
   list-style-type: none;
 }
 
+.front-side {
+  background-color: aqua;
+}
+
 .reviewTime {
-  border: 1px solid black;
   border-radius: 50%;
   height: 10px;
   width: 10px;

@@ -159,6 +159,7 @@ function Dashboard() {
         </TabPanel>
         <TabPanel value={value} index={3}>
           <h2>View your cards</h2>
+          <p>How to use the app: </p>
           <CardsList />
         </TabPanel>
       </Box>

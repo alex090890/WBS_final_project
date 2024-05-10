@@ -134,12 +134,20 @@ label {
   color: #ffffff;
 }
 
+.dashboard {
+  margin: 20px;
+}
+
 .cards-list {
   list-style-type: none;
 }
 
+.flashcard-item {
+  display: inline;
+}
+
 .front-side {
-  background-color: aqua;
+  background-color: rgb(226, 226, 226);
 }
 
 .reviewTime {
@@ -150,6 +158,38 @@ label {
   margin-left: 10px;
   position: relative;
   bottom: 0;
+}
+
+.reviewTime {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+
+.reviewTime.red {
+  background-color: red;
+}
+
+.reviewTime.yellow {
+  background-color: yellow;
+}
+
+.reviewTime.grey {
+  background-color: grey;
+}
+
+.reviewTime.blue {
+  background-color: blue;
+}
+
+.reviewTime.white {
+  background-color: white;
+}
+
+.reviewTime.transparent {
+  background-color: transparent;
 }
 
 .flash-btn {

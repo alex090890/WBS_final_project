@@ -107,37 +107,34 @@ export default function CardList () {
     return <p>No cards found</p>
   } else {
     return (
-      <div>
-        <ul className="cards-list">
-          {cards.map((card) => (
-            <li key={card._id}
-              onMouseOver={() => setShowDelete({ ...showDelete, [card._id]: true })}
-              onMouseOut={() => setShowDelete({ ...showDelete, [card._id]: false })}
-              onClick={() => toggleCardSide(card._id)}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="flashcard-item">
-                {showBack[card._id] ? (
-                  <p className={"front-side"}>{card.front} {card.isCardLearned}<div className="reviewTime" style={{
-                    backgroundColor: card.mastered ? 'white' : getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
-                      getCardAge(card.creationdate).diffInDays >= 2 ? 'yellow' :
-                      getCardAge(card.creationdate).diffInDays >= 1 ? 'grey' :
-                      getCardAge(card.creationdate).diffInDays >= 0 ? 'blue' :
-                      'white'
-                  }}></div></p>
-                ) : (
-                  <p className={"back-side"}>{card.back} {card.isCardLearned}<div className="reviewTime" style={{
-                    backgroundColor: card.mastered ? 'white' : getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
-                      getCardAge(card.creationdate).diffInDays >= 2 ? 'yellow' :
-                      getCardAge(card.creationdate).diffInDays >= 1 ? 'grey' :
-                      getCardAge(card.creationdate).diffInDays >= 0 ? 'blue' :
-                      'white'
-                  }}></div></p>
-                )}
-              </div>
+  <div>
+    <ul className="cards-list">
+      {cards.map((card) => (
+        <li key={card._id}
+          onMouseOver={() => setShowDelete({...showDelete, [card._id]: true })}
+          onMouseOut={() => setShowDelete({...showDelete, [card._id]: false })}
+          onClick={() => {toggleCardSide(card._id)}}
+          style={{ cursor: 'pointer' }}
+           className="flashcard-item"
+           title={`Added on ${card.creationdate}`}
+        >
+          <div>
+            {showBack[card._id]? (
+              <p className={"back-side"}>{card.back} {card.isCardLearned}<div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 3? "red" :
+                  getCardAge(card.creationdate).diffInDays >= 2? "yellow" :
+                  getCardAge(card.creationdate).diffInDays >= 1? "grey" :
+                  getCardAge(card.creationdate).diffInDays >= 0? "blue" :
+                  card.mastered? "transparent" : "white"}`}></div></p>
+            ) : (
+              <p className={"front-side"}>{card.front} {card.isCardLearned}<div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 3? "red" :
+                  getCardAge(card.creationdate).diffInDays >= 2? "yellow" :
+                  getCardAge(card.creationdate).diffInDays >= 1? "grey" :
+                  getCardAge(card.creationdate).diffInDays >= 0? "blue" :
+                  card.mastered? "transparent" : "red"}`}></div></p>
+            )}
+          </div>
               {showDelete[card._id] && (
                 <div>
-                  <p>Added on {card.creationdate}</p>
                   <button className="flash-btn" onClick={() => handleDelete(card._id)} title="Delete">🗑</button>
                   <button className="flash-btn" onClick={() => handleUpdate(card._id)} title="Update">🖊</button>
                   <button className="flash-btn" onClick={() => isCardLearned(card._id, "😀")} title="Good">😀</button>

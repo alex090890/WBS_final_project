@@ -103,6 +103,8 @@ function Dashboard() {
     return <p>User is not found</p>;
   } else {
     return (
+      <div className="dashboard">
+            <h1>Welcome, {user.firstname} {user.lastname}</h1>
       <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh' }}>
         <Tabs
           orientation="vertical"
@@ -119,7 +121,7 @@ function Dashboard() {
         </Tabs>
         <TabPanel value={value} index={0}>
           <div>
-            <h1>Welcome, {user.firstname} {user.lastname}</h1>
+
             <CurrentDate />
             <p>Login: {user.login}</p>
             <p>Email: {user.email}</p>
@@ -162,7 +164,8 @@ function Dashboard() {
           <p>How to use the app: </p>
           <CardsList />
         </TabPanel>
-      </Box>
+        </Box>
+        </div>
     );
   }
 }

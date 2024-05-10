@@ -122,15 +122,15 @@ export default function CardList () {
             {showBack[card._id]? (
               <p className={"back-side"}>{card.back} {card.isCardLearned}<div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 3? "red" :
                   getCardAge(card.creationdate).diffInDays >= 2? "yellow" :
-                  getCardAge(card.creationdate).diffInDays >= 1? "grey" :
+                  getCardAge(card.creationdate).diffInDays >= 1? "green" :
                   getCardAge(card.creationdate).diffInDays >= 0? "blue" :
-                  card.mastered? "transparent" : "white"}`}></div></p>
+                  card.mastered? "green" : "transparent"}`}></div></p>
             ) : (
-              <p className={"front-side"}>{card.front} {card.isCardLearned}<div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 3? "red" :
-                  getCardAge(card.creationdate).diffInDays >= 2? "yellow" :
-                  getCardAge(card.creationdate).diffInDays >= 1? "grey" :
-                  getCardAge(card.creationdate).diffInDays >= 0? "blue" :
-                  card.mastered? "transparent" : "red"}`}></div></p>
+              <p className={"front-side"}>{card.front} {card.isCardLearned}<div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 9? "green" :
+                  getCardAge(card.creationdate).diffInDays >= 7? "yellow" :
+                  getCardAge(card.creationdate).diffInDays >= 5? "grey" :
+                  getCardAge(card.creationdate).diffInDays >= 3? "blue" :
+                  card.mastered? "green" : "transparent"}`}></div></p>
             )}
           </div>
               {showDelete[card._id] && (

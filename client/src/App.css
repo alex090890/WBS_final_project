@@ -172,6 +172,11 @@ label {
   background-color: red;
 }
 
+reviewTime.green {
+  background-color: rgb(26, 187, 26);
+
+}
+
 .reviewTime.yellow {
   background-color: yellow;
 }
@@ -184,8 +189,8 @@ label {
   background-color: blue;
 }
 
-.reviewTime.white {
-  background-color: white;
+.reviewTime.green {
+  background-color: rgb(18, 228, 18);
 }
 
 .reviewTime.transparent {

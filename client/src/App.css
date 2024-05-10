@@ -149,6 +149,16 @@ label {
   bottom: 0;
 }
 
+.flash-btn {
+  border: none;
+  background-color: transparent;
+}
+
+.flash-btn:hover {
+  background-color: rgb(72, 72, 189);
+  border-radius: 50%;
+}
+
 @media screen and (max-width: 600px) {
   .login-container {
     display: block;

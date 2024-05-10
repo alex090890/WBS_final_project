@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
-export default function CardsList() {
+export default function CardList () {
   const { login } = useParams();
   const [cards, setCards] = useState([]);
   const [error, setError] = useState(null);
@@ -16,7 +16,7 @@ export default function CardsList() {
 
     setLoading(true);
     axios.get(`https://wordweb.vercel.app/cards/${login}`)
-     .then((response) => {
+      .then((response) => {
         if (response.data.length > 0) {
           setCards(response.data);
         } else {
@@ -24,49 +24,49 @@ export default function CardsList() {
         }
         setLoading(false);
       })
-     .catch((error) => {
+      .catch((error) => {
         console.error(error);
         setError('Unexpected error');
         setLoading(false);
       })
   }, [login]);
 
-  function handleDelete(id) {
+  const handleDelete = (id) => {
     axios.delete(`https://wordweb.vercel.app/deletecard/${id}`)
-     .then(() => {
-        setCards(cards.filter((card) => card._id!== id));
+      .then(() => {
+        setCards(cards.filter((card) => card._id !== id));
         setError(null);
       })
-     .catch((error) => {
+      .catch((error) => {
         console.log(error);
         setError('Error deleting card');
       })
   }
 
-  function handleUpdate(id) {
-    setShowUpdate({...showUpdate, [id]: true });
+  const handleUpdate = (id) => {
+    setShowUpdate({ ...showUpdate, [id]: true });
   }
 
-  function handleSaveUpdate(id, front, back) {
+  const handleSaveUpdate = (id, front, back) => {
     axios.patch(`https://wordweb.vercel.app/update-card/${id}`, { front, back })
-     .then(() => {
+      .then(() => {
         const updatedCard = cards.find((card) => card._id === id);
         updatedCard.front = front;
         updatedCard.back = back;
         setCards([...cards]);
-        setShowUpdate({...showUpdate, [id]: false });
+        setShowUpdate({ ...showUpdate, [id]: false });
       })
-     .catch((error) => {
+      .catch((error) => {
         console.log(error);
         setError('Error updating card');
       })
   }
 
-  function handleCancelUpdate(id) {
-    setShowUpdate({...showUpdate, [id]: false });
+  const handleCancelUpdate = (id) => {
+    setShowUpdate({ ...showUpdate, [id]: false });
   }
 
-  function getCardAge(creationdate) {
+  const getCardAge = (creationdate) => {
     const currentDate = new Date();
     const currentDateFormatted = `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
     const [day, month, year] = creationdate.split('-');
@@ -80,17 +80,17 @@ export default function CardsList() {
   }
 
   const toggleCardSide = (id) => {
-    setShowBack(prev => ({...prev, [id]:!prev[id] }));
+    setShowBack(prev => ({ ...prev, [id]: !prev[id] }));
   };
 
   const isCardLearned = (id, learned) => {
     axios.patch(`https://wordweb.vercel.app/update-card/${id}`, { isCardLearned: learned })
-     .then(() => {
+      .then(() => {
         const updatedCard = cards.find((card) => card._id === id);
         updatedCard.isCardLearned = learned;
         setCards([...cards]);
       })
-     .catch((error) => {
+      .catch((error) => {
         console.log(error);
         setError('Error updating card learned status');
       })
@@ -105,45 +105,43 @@ export default function CardsList() {
   } else {
     return (
       <div>
-        <h1>{login}&#39;s Cards</h1>
+        <h1>{login}'s Cards</h1>
         <ul className="cards-list">
           {cards.map((card) => (
             <li key={card._id}
-              onMouseOver={() => setShowDelete({...showDelete, [card._id]: true })}
-              onMouseOut={() => setShowDelete({...showDelete, [card._id]: false })}
+              onMouseOver={() => setShowDelete({ ...showDelete, [card._id]: true })}
+              onMouseOut={() => setShowDelete({ ...showDelete, [card._id]: false })}
               onClick={() => toggleCardSide(card._id)}
               style={{ cursor: 'pointer' }}
             >
               <div className="flashcard-item">
                 {showBack[card._id] ? (
-
-                    <p className="front-side">{card.front} { card.isCardLearned}<div className="reviewTime" style={{
-                backgroundColor: getCardAge(card.creationdate).diffInDays >= 3? 'red' :
-                              getCardAge(card.creationdate).diffInDays >= 2? 'yellow' :
-                        getCardAge(card.creationdate).diffInDays >= 1? 'grey' :
-                            getCardAge(card.creationdate).diffInDays >= 0? 'blue' :
-                              'white'
-              }}></div></p>
+                  <p className="front-side">{card.front} {card.isCardLearned}<div className="reviewTime" style={{
+                    backgroundColor: getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
+                      getCardAge(card.creationdate).diffInDays >= 2 ? 'yellow' :
+                      getCardAge(card.creationdate).diffInDays >= 1 ? 'grey' :
+                      getCardAge(card.creationdate).diffInDays >= 0 ? 'blue' :
+                      'white'
+                  }}></div></p>
                 ) : (
-                    <p className="back-side">{card.back} { card.isCardLearned}<div className="reviewTime" style={{
-                backgroundColor: getCardAge(card.creationdate).diffInDays >= 3? 'red' :
-                              getCardAge(card.creationdate).diffInDays >= 2? 'yellow' :
-                        getCardAge(card.creationdate).diffInDays >= 1? 'grey' :
-                            getCardAge(card.creationdate).diffInDays >= 0? 'blue' :
-                              'white'
-              }}></div></p>
+                  <p className="back-side">{card.back} {card.isCardLearned}<div className="reviewTime" style={{
+                    backgroundColor: getCardAge(card.creationdate).diffInDays >= 3 ? 'red' :
+                      getCardAge(card.creationdate).diffInDays >= 2 ? 'yellow' :
+                      getCardAge(card.creationdate).diffInDays >= 1 ? 'grey' :
+                      getCardAge(card.creationdate).diffInDays >= 0 ? 'blue' :
+                      'white'
+                  }}></div></p>
                 )}
-                
               </div>
               {showDelete[card._id] && (
                 <div>
                   <p>Added on {card.creationdate}</p>
-                  <button onClick={() => handleDelete(card._id)} title="Delete">🗑</button>
-                  <button onClick={() => handleUpdate(card._id)} title="Update">🖊</button>
-                  <button onClick={() => isCardLearned(card._id, "😀")} title="Good">😀</button>
-                  <button onClick={() => isCardLearned(card._id, "😐")} title="So-so">😐</button>
-                  <button onClick={() => isCardLearned(card._id, "😒")} title="Bad">😒</button>
-                  <button onClick={() => isCardLearned(card._id, "✅")} title="I have mastered it!">✅</button>
+                  <button className="flash-btn" onClick={() => handleDelete(card._id)} title="Delete">🗑</button>
+                  <button className="flash-btn" onClick={() => handleUpdate(card._id)} title="Update">🖊</button>
+                  <button className="flash-btn" onClick={() => isCardLearned(card._id, "😀")} title="Good">😀</button>
+                  <button className="flash-btn" onClick={() => isCardLearned(card._id, "😐")} title="So-so">😐</button>
+                  <button className="flash-btn" onClick={() => isCardLearned(card._id, "😒")} title="Bad">😒</button>
+                  <button className="flash-btn" onClick={() => isCardLearned(card._id, "✅")} title="I have mastered it!">✅</button>
                 </div>
               )}
               {showUpdate[card._id] && (

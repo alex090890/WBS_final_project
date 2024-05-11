@@ -161,7 +161,12 @@ function Dashboard() {
         </TabPanel>
         <TabPanel value={value} index={3} className="cards-container">
           <h2>View your cards</h2>
-          <p>How to use the app: </p>
+            <p>How to use the app: </p>
+            <ul>
+              <li>Click on the card to see the translation</li>
+              <li>Click on the trash icon to delete the card</li>
+              <li>Click on the pencil icon to edit the card</li>
+            </ul>
           <CardsList />
         </TabPanel>
         </Box>

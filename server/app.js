@@ -10,9 +10,11 @@ import crypto from 'crypto';
 
 
 config();
-const jwtSecret = process.env.SECRET_KEY;
+// const jwtSecret = process.env.SECRET_KEY;
+const secretKey = crypto.randomBytes(64).toString('hex');
+console.log(secretKey);
 
-console.log(jwtSecret);
+//console.log(jwtSecret);
 
 const uri = "mongodb+srv://alexprofteach:JANnHALJute10Lsr@cluster0.0ls7xoz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -52,10 +54,11 @@ app.use(bodyParser.json());
 
 
 // Создание токена
-const token = jwt.sign({ user_id: '123' }, jwtSecret);
+//const token = jwt.sign({ user_id: '123' }, jwtSecret);
+const token = jwt.sign({ user_id: '123' }, secretKey);
 
 // Проверка токена
-jwt.verify(token, jwtSecret, (err, decoded) => {
+jwt.verify(token, secretKey, (err, decoded) => {
   if (err) {
     console.log('Token verification failed');
   } else {

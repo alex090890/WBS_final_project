@@ -159,7 +159,7 @@ function Dashboard() {
           <h2>Add a new card</h2>
           <Box><AddCard /></Box>
         </TabPanel>
-        <TabPanel value={value} index={3}>
+        <TabPanel value={value} index={3} className="cards-container">
           <h2>View your cards</h2>
           <p>How to use the app: </p>
           <CardsList />

@@ -42,6 +42,7 @@ export default function LoginEN() {
 
     try {
       const response = await axios.post("https://wordweb.vercel.app/login", user);
+      localStorage.setItem('token', response.data.token);
       alert(`Welcome back, ${user.login}!`); // handle the response
       setState((prevState) => ({...prevState, error: null }));
       console.log(response);

@@ -7,7 +7,6 @@ export default function CardList () {
   const [cards, setCards] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [showDelete, setShowDelete] = useState({});
   const [showUpdate, setShowUpdate] = useState({});
   const [showBack, setShowBack] = useState({});
 
@@ -111,8 +110,6 @@ export default function CardList () {
     <ul className="cards-list">
       {cards.map((card) => (
         <li key={card._id}
-          onMouseOver={() => setShowDelete({...showDelete, [card._id]: true })}
-          onMouseOut={() => setShowDelete({...showDelete, [card._id]: false })}
           onClick={() => {toggleCardSide(card._id)}}
           style={{ cursor: 'pointer' }}
            className="flashcard-item"
@@ -120,20 +117,11 @@ export default function CardList () {
         >
           <div>
             {showBack[card._id]? (
-              <p className={"back-side"}>{card.back} {card.isCardLearned}<div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 3? "red" :
+              <div className={"back-side"}>{card.back} {card.isCardLearned}<div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 3? "red" :
                   getCardAge(card.creationdate).diffInDays >= 2? "yellow" :
                   getCardAge(card.creationdate).diffInDays >= 1? "green" :
                   getCardAge(card.creationdate).diffInDays >= 0? "blue" :
-                  card.mastered? "green" : "transparent"}`}></div></p>
-            ) : (
-              <p className={"front-side"}>{card.front} {card.isCardLearned}<div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 9? "green" :
-                  getCardAge(card.creationdate).diffInDays >= 7? "yellow" :
-                  getCardAge(card.creationdate).diffInDays >= 5? "grey" :
-                  getCardAge(card.creationdate).diffInDays >= 3? "blue" :
-                  card.mastered? "green" : "transparent"}`}></div></p>
-            )}
-          </div>
-              {showDelete[card._id] && (
+                      card.mastered ? "green" : "transparent"}`}></div>
                 <div>
                   <button className="flash-btn" onClick={() => handleDelete(card._id)} title="Delete">🗑</button>
                   <button className="flash-btn" onClick={() => handleUpdate(card._id)} title="Update">🖊</button>
@@ -142,7 +130,26 @@ export default function CardList () {
                   <button className="flash-btn" onClick={() => isCardLearned(card._id, "😒")} title="Bad">😒</button>
                   <button className="flash-btn" onClick={() => isCardLearned(card._id, "✅")} title="I have mastered it!">✅</button>
                 </div>
-              )}
+              </div>
+            ) : (
+                <div className={"front-side"}>{card.front} {card.isCardLearned}
+                  <div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 9 ? "green" :
+                  getCardAge(card.creationdate).diffInDays >= 7? "yellow" :
+                  getCardAge(card.creationdate).diffInDays >= 5? "grey" :
+                  getCardAge(card.creationdate).diffInDays >= 3? "blue" :
+                  card.mastered ? "green" : "transparent"}`}>
+                  </div>
+                  <div>
+                    <button className="flash-btn" onClick={() => handleDelete(card._id)} title="Delete">🗑</button>
+                    <button className="flash-btn" onClick={() => handleUpdate(card._id)} title="Update">🖊</button>
+                    <button className="flash-btn" onClick={() => isCardLearned(card._id, "😀")} title="Good">😀</button>
+                    <button className="flash-btn" onClick={() => isCardLearned(card._id, "😐")} title="So-so">😐</button>
+                    <button className="flash-btn" onClick={() => isCardLearned(card._id, "😒")} title="Bad">😒</button>
+                    <button className="flash-btn" onClick={() => isCardLearned(card._id, "✅")} title="I have mastered it!">✅</button>
+                  </div>
+                </div>
+            )}
+          </div>
               {showUpdate[card._id] && (
                 <form>
                   <label>Front:</label>

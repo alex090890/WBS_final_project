@@ -140,6 +140,19 @@ label {
 
 .cards-list {
   list-style-type: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  justify-items: stretch;
+}
+
+.css-mzfgzu {
+  width: 100%;
+}
+
+.cards-container {
+  width: 100%;
 }
 
 .flashcard-item {

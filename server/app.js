@@ -143,27 +143,24 @@ app.get('/userinfo/:login', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   try {
+    const { login, password } = req.body;
     const db = client.db("users");
     const usersCollection = db.collection("users");
-    const user = await usersCollection.findOne({ login: req.body.login });
+    const user = await usersCollection.findOne({ login });
     if (!user) {
-      res.status(404).send('User not found');
-      return;
+      return res.status(404).send('User not found');
     }
 
-    // Check the password
-    const isValidPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!isValidPassword) {
-      res.status(401).send('Invalid password');
-      return;
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).send('Invalid password');
     }
 
-    // Generate a JWT
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
-    res.status(200).send({ token }); // Send the JWT token
+    const token = jwt.sign({ user_id: user._id }, secretKey);
+    res.status(200).send({ token, user: { firstname: user.firstname, lastname: user.lastname, login: user.login, email: user.email } });
   } catch (err) {
     console.log(err);
-    res.status(400).send('Error logging in');
+    res.status(500).send('Error logging in');
   }
 });
 

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Input } from 'antd';
-import Counter from "./Counter";
 
 export default function CardList() {
   const { login } = useParams();
@@ -11,6 +10,12 @@ export default function CardList() {
   const [loading, setLoading] = useState(false);
   const [showUpdate, setShowUpdate] = useState({});
   const [showBack, setShowBack] = useState({});
+  const [cardCounts, setCardCounts] = useState({
+    mastered: 0,
+    good: 0,
+    soSo: 0,
+    bad: 0,
+  });
 
   useEffect(() => {
     if (!login) return;
@@ -20,6 +25,7 @@ export default function CardList() {
       .then((response) => {
         if (response.data.length > 0) {
           setCards(response.data);
+          updateCardCounts(response.data);
         } else {
           setError('No cards found');
         }
@@ -32,12 +38,39 @@ export default function CardList() {
       })
   }, [login]);
 
-
+  const updateCardCounts = (cards) => {
+    const counts = {
+      mastered: 0,
+      good: 0,
+      soSo: 0,
+      bad: 0,
+    };
+    cards.forEach((card) => {
+      switch (card.isCardLearned) {
+        case '✅':
+          counts.mastered++;
+          break;
+        case '😀':
+          counts.good++;
+          break;
+        case '😐':
+          counts.soSo++;
+          break;
+        case '😒':
+          counts.bad++;
+          break;
+        default:
+          break;
+      }
+    });
+    setCardCounts(counts);
+  };
 
   const handleDelete = (id) => {
     axios.delete(`https://wordweb.vercel.app/deletecard/${id}`)
       .then(() => {
         setCards(cards.filter((card) => card._id !== id));
+        updateCardCounts(cards);
         setError(null);
       })
       .catch((error) => {
@@ -59,6 +92,7 @@ export default function CardList() {
         updatedCard.isCardLearned = isCardLearned;
         setCards([...cards]);
         setShowUpdate({ ...showUpdate, [id]: false });
+        updateCardCounts(cards);
       })
       .catch((error) => {
         console.log(error);
@@ -81,6 +115,7 @@ export default function CardList() {
         const updatedCard = cards.find((card) => card._id === id);
         updatedCard.isCardLearned = learned;
         setCards([...cards]);
+        updateCardCounts(cards);
       })
       .catch((error) => {
         console.log(error);
@@ -97,7 +132,12 @@ export default function CardList() {
   } else {
     return (
       <div>
-        <Counter />
+        <h3>Your statistics:</h3>
+        <p>You have {cards.length + 1} cards</p>
+                  <p>Mastered: {cardCounts.mastered}</p>
+          <p>Good: {cardCounts.good}</p>
+          <p>So-so: {cardCounts.soSo}</p>
+        <p>Bad: {cardCounts.bad}</p>
         <ul className="cards-list">
           {cards.map((card) => (
             <li key={card._id}

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Input } from 'antd';
 
 export default function CardList () {
   const { login } = useParams();
@@ -133,12 +134,11 @@ export default function CardList () {
               </div>
             ) : (
                 <div className={"front-side"}>{card.front} {card.isCardLearned}
-                  <div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 9 ? "green" :
-                  getCardAge(card.creationdate).diffInDays >= 7? "yellow" :
-                  getCardAge(card.creationdate).diffInDays >= 5? "grey" :
-                  getCardAge(card.creationdate).diffInDays >= 3? "blue" :
-                  card.mastered ? "green" : "transparent"}`}>
-                  </div>
+                  <div className={`reviewTime ${getCardAge(card.creationdate).diffInDays >= 3? "red" :
+                  getCardAge(card.creationdate).diffInDays >= 2? "yellow" :
+                  getCardAge(card.creationdate).diffInDays >= 1? "green" :
+                  getCardAge(card.creationdate).diffInDays >= 0? "blue" :
+                      card.mastered ? "green" : "transparent"}`}></div>
                   <div>
                     <button className="flash-btn" onClick={() => handleDelete(card._id)} title="Delete">🗑</button>
                     <button className="flash-btn" onClick={() => handleUpdate(card._id)} title="Update">🖊</button>
@@ -153,10 +153,10 @@ export default function CardList () {
               {showUpdate[card._id] && (
                 <form>
                   <label>Front:</label>
-                  <input type="text" defaultValue={card.front} />
+                  <Input type="text" defaultValue={card.front} />
                   <br />
                   <label>Back:</label>
-                  <input type="text" defaultValue={card.back} />
+                  <Input type="text" defaultValue={card.back} />
                   <br />
                   <button onClick={(e) => {
                     e.preventDefault();

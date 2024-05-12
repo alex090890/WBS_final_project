@@ -166,6 +166,7 @@ function Dashboard() {
               <li>Click on the card to see the translation</li>
               <li>Click on the trash icon to delete the card</li>
               <li>Click on the pencil icon to edit the card</li>
+              <li>You will see four icons: 😀, 😐, 😒 and ✅. After you review the word, choose one of the emotions. When you are sure that you have mastered the word, click on ✅</li>
             </ul>
           <CardsList />
         </TabPanel>

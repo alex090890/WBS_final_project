@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { Input } from 'antd';
 
 export default function AddCard() {
   const { login } = useParams();
@@ -57,26 +58,24 @@ export default function AddCard() {
         <form onSubmit={handleSubmit}>
         <label>
           Front Side:
-          <input
+          <Input
             type="text"
             name="frontside"
             value={state.frontside}
             onChange={handleInputChange}
           />
               </label>
-
+              <br />
               <label>
           Back Side:
-          <input
+          <Input
             type="text"
             name="backside"
             value={state.backside}
             onChange={handleInputChange}
           />
               </label>
-              
-
-
+              <br />
           <button type="submit">Save the card</button>
           
       </form>

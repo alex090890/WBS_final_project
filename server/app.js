@@ -10,11 +10,9 @@ import crypto from 'crypto';
 
 
 config();
-// const jwtSecret = process.env.SECRET_KEY;
-const secretKey = crypto.randomBytes(64).toString('hex');
-console.log(secretKey);
+const jwtSecret = process.env.SECRET_KEY;
 
-//console.log(jwtSecret);
+console.log(jwtSecret);
 
 const uri = "mongodb+srv://alexprofteach:JANnHALJute10Lsr@cluster0.0ls7xoz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -54,11 +52,10 @@ app.use(bodyParser.json());
 
 
 // Создание токена
-//const token = jwt.sign({ user_id: '123' }, jwtSecret);
-const token = jwt.sign({ user_id: '123' }, secretKey);
+const token = jwt.sign({ user_id: '123' }, jwtSecret);
 
 // Проверка токена
-jwt.verify(token, secretKey, (err, decoded) => {
+jwt.verify(token, jwtSecret, (err, decoded) => {
   if (err) {
     console.log('Token verification failed');
   } else {
@@ -143,24 +140,27 @@ app.get('/userinfo/:login', async (req, res) => {
 
 app.post('/login', async (req, res) => {
   try {
-    const { login, password } = req.body;
     const db = client.db("users");
     const usersCollection = db.collection("users");
-    const user = await usersCollection.findOne({ login });
+    const user = await usersCollection.findOne({ login: req.body.login });
     if (!user) {
-      return res.status(404).send('User not found');
+      res.status(404).send('User not found');
+      return;
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(401).send('Invalid password');
+    // Check the password
+    const isValidPassword = await bcrypt.compare(req.body.password, user.password);
+    if (!isValidPassword) {
+      res.status(401).send('Invalid password');
+      return;
     }
 
-    const token = jwt.sign({ user_id: user._id }, secretKey);
-    res.status(200).send({ token, user: { firstname: user.firstname, lastname: user.lastname, login: user.login, email: user.email } });
+    // Generate a JWT
+    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, { expiresIn: '1h' });
+    res.status(200).send({ token }); // Send the JWT token
   } catch (err) {
     console.log(err);
-    res.status(500).send('Error logging in');
+    res.status(400).send('Error logging in');
   }
 });
 

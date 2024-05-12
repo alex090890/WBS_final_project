@@ -29,7 +29,7 @@ export default function RemoveAllCards () {
       {isDeleting? (
         <p>Deleting cards...</p>
       ) : (
-        <button onClick={handleDelete}>Delete all cards</button>
+        <button onClick={handleDelete} className="delete-btn">Delete all cards</button>
       )}
       {deleteError && <p style={{ color: 'red' }}>{deleteError}</p>}
     </div>

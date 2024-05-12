@@ -167,6 +167,20 @@ label {
 
 .back-side {
   padding-left: 5px;
+  border: 1px solid rgb(226, 226, 226);
+}
+
+.save-cards, .delete-btn, .update-btn {
+  background-color: rgb(0, 0, 255);
+  border: none;
+  margin: 10px;
+  color: white;
+}
+
+
+
+.input-card {
+  min-width: 200px;
 }
 
 .reviewTime {

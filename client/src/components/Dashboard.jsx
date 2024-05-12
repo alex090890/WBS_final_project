@@ -125,8 +125,8 @@ function Dashboard() {
             <CurrentDate />
             <p>Login: {user.login}</p>
             <p>Email: {user.email}</p>
-            <button className="regbutton" onClick={() => navigate('/')}>Logout</button>
-            <button onClick={handleUpdate}>Update</button>
+            <button onClick={() => navigate('/')} className="update-btn">Logout</button>
+            <button onClick={handleUpdate} className="update-btn">Update</button>
             {isUpdating && (
               <form>
                 <label>First Name:</label>
@@ -142,8 +142,8 @@ function Dashboard() {
                   e.preventDefault();
                   const firstname = e.target.form[0].value;
                   handleSaveUpdate(firstname, user.lastname, user.password, user.email);
-                }}>Save</button>
-                <button onClick={handleCancelUpdate}>Cancel</button>
+                }} className="update-btn">Save</button>
+                <button onClick={handleCancelUpdate} className="update-btn">Cancel</button>
               </form>
             )}
           </div>
@@ -151,7 +151,7 @@ function Dashboard() {
         <TabPanel value={value} index={1}>
           <h2>Delete your account</h2>
           <p>This process is unreversable. </p>
-          <button onClick={deleteUser}>Delete account</button>
+          <button onClick={deleteUser} className="delete-btn">Delete account</button>
           <h2>Delete all your cards</h2>
           <RemoveAllCards />
         </TabPanel>

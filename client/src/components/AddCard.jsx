@@ -62,7 +62,8 @@ export default function AddCard() {
             type="text"
             name="frontside"
             value={state.frontside}
-            onChange={handleInputChange}
+              onChange={handleInputChange}
+              className="input-card"
           />
               </label>
               <br />
@@ -72,11 +73,12 @@ export default function AddCard() {
             type="text"
             name="backside"
             value={state.backside}
-            onChange={handleInputChange}
+              onChange={handleInputChange}
+              className="input-card"
           />
               </label>
               <br />
-          <button type="submit">Save the card</button>
+          <button type="submit" className="save-cards">💾</button>
           
       </form>
       </div>

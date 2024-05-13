@@ -399,6 +399,29 @@ app.delete('/deletecard/:id', async (req, res) => {
   }
 });
 
+app.get('/searchcards', async (req, res) => {
+  const query = req.query.q; // Get the search query from the URL query parameters
+
+  try {
+    const db = client.db("flashcards");
+    const cardsCollection = db.collection("cards");
+
+    // Search for cards where the 'front' or 'back' text contains the query string
+    const cards = await cardsCollection.find({
+      $or: [
+        { front: { $regex: query, $options: 'i' } }, // case-insensitive regex search
+        { back: { $regex: query, $options: 'i' } }
+      ]
+    }).toArray();
+
+    res.status(200).json(cards);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error searching cards');
+  }
+});
+
+
 app.get('/', (req, res) => {
   res.send('Welcome to the WordWeb database')
 });

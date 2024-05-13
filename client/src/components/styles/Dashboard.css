@@ -1,13 +1,18 @@
-.emoji-dashboard {
-    font-size: 20rem;
-    margin: 10px;
-    position: relative;
-    top: 0px;
-}
-
 .dashboard-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
+}
+
+.dashboard-img {
+    width: 100%;
+    position: sticky;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+
+}
+
+.MuiTabs-scroller {
+    min-width: 200px;
 }
 
 @media screen and (max-width: 768px) {

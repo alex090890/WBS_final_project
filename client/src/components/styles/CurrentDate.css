@@ -1,6 +1,6 @@
 .digital-clock {
   font-family: 'Digital-7', monospace;
-  font-size: 48px;
+  font-size: 28px;
   color: #33cc33;
   text-align: center;
   padding: 20px;
@@ -8,6 +8,7 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
+
 
 @media screen and (max-width: 768px) {
   .digital-clock {

@@ -2,17 +2,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import './styles/Dashboard.css';
 import AddCard from "./AddCard";
 import CardsList from "./CardsList";
 import RemoveAllCards from "./RemoveAllCards";
 import CurrentDate from "./CurrentDate";
-import SearchBar from "./SearchBar";
-import './styles/Dashboard.css';
-
-
+import Searchbar from "./Searchbar";
 function TabPanel(props) {
   const { children, value, index,...other } = props;
 
@@ -43,7 +41,6 @@ function Dashboard() {
   const { login } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [value, setValue] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState(null);
 
@@ -107,23 +104,15 @@ function Dashboard() {
   } else {
     return (
       <div className="dashboard">
-            <h1>Welcome to WordWeb, {user.login}! </h1>
-      <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh' }}>
+        <h1>Welcome to WordWeb, {user.login}! </h1>
         <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          value={value}
-          onChange={(event, newValue) => setValue(newValue)}
-          aria-label="Vertical tabs example"
-          sx={{ borderRight: 1, borderColor: 'divider' }}
-        >
-          <Tab label="Dashboard" />
-          <Tab label="Danger Zone" />
-          <Tab label="New Card" />
-          <Tab label="Your cards" />
-        </Tabs>
-        <TabPanel value={value} index={0}>
-          <div className="dashboard-container">
+      defaultActiveKey="profile"
+      id="justify-tab-example"
+      className="mb-3"
+      justify
+    >
+      <Tab eventKey="dashboard" title="Dashboard">
+        <div className="dashboard-container">
             <div>
 
               <CurrentDate />
@@ -152,22 +141,22 @@ function Dashboard() {
               </form>
             )}
               </div>
-              <div className="emoji-dashboard">👨‍🦱</div>
+              <div className="emoji-dashboard"><img className="dashboard-img" src="https://res.cloudinary.com/dosvnb1kk/image/upload/v1715636618/Flowers_kr6faw.jpg" /></div>
           </div>
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          <h2>Delete your account</h2>
+      </Tab>
+      <Tab eventKey="settings" title="Settings">
+         <h2>Delete your account</h2>
           <p>This process is unreversable. </p>
           <button onClick={deleteUser} className="delete-btn">Delete account</button>
           <h2>Delete all your cards</h2>
           <RemoveAllCards />
-        </TabPanel>
-        <TabPanel value={value} index={2}>
-          <h2>Add a new card</h2>
-          <Box><AddCard /></Box>
-        </TabPanel>
-        <TabPanel value={value} index={3} className="cards-container">
-          <h2>View your cards</h2>
+      </Tab>
+      <Tab eventKey="new-card" title="New Card">
+        <h2>Add a new card</h2>
+          <AddCard />
+      </Tab>
+      <Tab eventKey="your-cards" title="Your Cards">
+        <h2>View your cards</h2>
             <p>How to use the app: </p>
             <ul>
               <li>Click on the card to see the translation</li>
@@ -175,10 +164,10 @@ function Dashboard() {
               <li>Click on the pencil icon to edit the card</li>
               <li>You will see four icons: 😀, 😐, 😒 and ✅. After you review the word, choose one of the emotions. When you are sure that you have mastered the word, click on ✅</li>
             </ul>
-            <SearchBar />
+            <Searchbar />
           <CardsList />
-        </TabPanel>
-        </Box>
+      </Tab>
+    </Tabs>
         </div>
     );
   }

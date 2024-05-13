@@ -163,10 +163,10 @@ export default function CardList() {
                       <div>
                         <button className="flash-btn" onClick={() => handleDelete(card._id)} title="Delete">🗑</button>
                         <button className="flash-btn" onClick={() => handleUpdate(card._id)} title="Update">🖊</button>
-                        <button className="flash-btn" onClick={() => isCardLearned(card._id, "😀")} title="Good">😀</button>
-                        <button className="flash-btn" onClick={() => isCardLearned(card._id, "😐")} title="So-so">😐</button>
-                        <button className="flash-btn" onClick={() => isCardLearned(card._id, "😒")} title="Bad">😒</button>
-                        <button className="flash-btn"onClick={() => isCardLearned(card._id, "✅")} title="I have mastered it!">✅</button>
+                      <button className="flash-btn" onClick={() => isCardLearned(card._id, "😒")} title="Bad">😒</button>
+                      <button className="flash-btn" onClick={() => isCardLearned(card._id, "😐")} title="So-so">😐</button>
+                      <button className="flash-btn" onClick={() => isCardLearned(card._id, "😀")} title="Good">😀</button>
+                      <button className="flash-btn" onClick={() => isCardLearned(card._id, "✅")} title="I have mastered it!">✅</button>
                       </div>
                     </div>
                 )}

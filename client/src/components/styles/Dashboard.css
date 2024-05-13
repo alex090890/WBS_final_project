@@ -1,0 +1,23 @@
+.emoji-dashboard {
+    font-size: 20rem;
+    margin: 10px;
+    position: relative;
+    top: 0px;
+}
+
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-container {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 50%;
+    }
+
+    .emoji-dashboard {
+        font-size: 10rem;
+    }
+}

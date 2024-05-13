@@ -9,6 +9,7 @@ import AddCard from "./AddCard";
 import CardsList from "./CardsList";
 import RemoveAllCards from "./RemoveAllCards";
 import CurrentDate from "./CurrentDate";
+import './styles/Dashboard.css';
 
 function TabPanel(props) {
   const { children, value, index,...other } = props;
@@ -104,7 +105,7 @@ function Dashboard() {
   } else {
     return (
       <div className="dashboard">
-            <h1>Welcome, {user.firstname} {user.lastname}</h1>
+            <h1>Welcome to WordWeb, {user.login}! </h1>
       <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh' }}>
         <Tabs
           orientation="vertical"
@@ -120,9 +121,11 @@ function Dashboard() {
           <Tab label="Your cards" />
         </Tabs>
         <TabPanel value={value} index={0}>
-          <div>
+          <div className="dashboard-container">
+            <div>
 
-            <CurrentDate />
+              <CurrentDate />
+              <p>Name: {user.firstname} {user.lastname}</p>
             <p>Login: {user.login}</p>
             <p>Email: {user.email}</p>
             <button onClick={() => navigate('/')} className="update-btn">Logout</button>
@@ -146,6 +149,8 @@ function Dashboard() {
                 <button onClick={handleCancelUpdate} className="update-btn">Cancel</button>
               </form>
             )}
+              </div>
+              <div className="emoji-dashboard">👨‍🦱</div>
           </div>
         </TabPanel>
         <TabPanel value={value} index={1}>

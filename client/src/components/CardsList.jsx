@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Input } from 'antd';
+import { Card } from 'antd';
 
 export default function CardList() {
   const { login } = useParams();
@@ -16,6 +17,11 @@ export default function CardList() {
     soSo: 0,
     bad: 0,
   });
+  
+  const gridStyle = {
+  width: '100%',
+  textAlign: 'center',
+};
 
   useEffect(() => {
     if (!login) return;
@@ -132,12 +138,17 @@ export default function CardList() {
   } else {
     return (
       <div>
-        <h3>Your statistics:</h3>
-        <p>You have {cards.length + 1} cards</p>
-                  <p>Mastered: {cardCounts.mastered}</p>
-          <p>Good: {cardCounts.good}</p>
-          <p>So-so: {cardCounts.soSo}</p>
-        <p>Bad: {cardCounts.bad}</p>
+        <Card title="Your statistics:">
+          <div className="statistics">
+                <Card style={gridStyle}>Mastered: <br /> {cardCounts.mastered}</Card>
+    <Card style={gridStyle} className="stats-item">Good: <br />{cardCounts.good}</Card>
+    <Card style={gridStyle} className="stats-item">So-so: <br />{cardCounts.soSo}</Card>
+    <Card style={gridStyle} className="stats-item">Bad: <br />{cardCounts.bad}</Card>
+          </div>
+        </Card>
+        <div>
+          <Card title="Your cards:">
+            <p>You have {cards.length + 1} cards</p>
         <ul className="cards-list">
           {cards.map((card) => (
             <li key={card._id}
@@ -191,6 +202,8 @@ export default function CardList() {
             </li>
           ))}
         </ul>
+          </Card>
+        </div>
       </div>
     );
   }

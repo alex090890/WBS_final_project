@@ -65,8 +65,8 @@ export default function AddCard() {
               onChange={handleInputChange}
               className="input-card"
           />
-              </label>
-              <br />
+          </label>
+          <br />
               <label>
           Back Side:
           <Input

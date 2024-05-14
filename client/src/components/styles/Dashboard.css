@@ -1,19 +1,38 @@
 .dashboard-container {
     display: grid;
+    grid-template-columns: 75% 25%;
+    justify-items: center;
+}
+
+.account {
+    display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+
 }
 
 .dashboard-img {
-    width: 100%;
+    width: 70%;
     position: sticky;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
-
+    column-gap: 20px;
 }
 
-.MuiTabs-scroller {
-    min-width: 200px;
+.instructions {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
 }
+
+.statistics {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+
 
 @media screen and (max-width: 768px) {
     .dashboard-container {
@@ -22,7 +41,9 @@
         width: 50%;
     }
 
-    .emoji-dashboard {
-        font-size: 10rem;
+    .statistics {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
     }
+
 }

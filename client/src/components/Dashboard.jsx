@@ -11,8 +11,11 @@ import CardsList from "./CardsList";
 import RemoveAllCards from "./RemoveAllCards";
 import CurrentDate from "./CurrentDate";
 import Search from "./Search";
+import { Card } from 'antd';
+
 function TabPanel(props) {
-  const { children, value, index,...other } = props;
+  const { children, value, index, ...other } = props;
+  
 
   return (
     <div
@@ -111,12 +114,13 @@ function Dashboard() {
       className="mb-3"
       justify
     >
-      <Tab eventKey="dashboard" title="Dashboard">
-        <div className="dashboard-container">
-            <div>
+          <Tab eventKey="profile" title="Your Account">
 
-              <CurrentDate />
-              <p>Name: {user.firstname} {user.lastname}</p>
+            <div className="dashboard-container">
+            <div className="account">
+                
+                <Card title="Your Account">
+                  <p>Name: {user.firstname} {user.lastname}</p>
             <p>Login: {user.login}</p>
             <p>Email: {user.email}</p>
             <button onClick={() => navigate('/')} className="update-btn">Logout</button>
@@ -139,32 +143,43 @@ function Dashboard() {
                 }} className="update-btn">Save</button>
                 <button onClick={handleCancelUpdate} className="update-btn">Cancel</button>
               </form>
-            )}
-              </div>
-              <div className="emoji-dashboard"><img className="dashboard-img" src="https://res.cloudinary.com/dosvnb1kk/image/upload/v1715636618/Flowers_kr6faw.jpg" /></div>
-          </div>
-      </Tab>
-      <Tab eventKey="settings" title="Settings">
-         <h2>Delete your account</h2>
+                )}
+                </Card>
+                <Card title="Danger Zone">
+                                <h2>Delete your account</h2>
           <p>This process is unreversable. </p>
           <button onClick={deleteUser} className="delete-btn">Delete account</button>
           <h2>Delete all your cards</h2>
           <RemoveAllCards />
+                </Card>
+              </div>
+              <div className="emoji-dashboard">
+                <img className="dashboard-img" src="https://res.cloudinary.com/dosvnb1kk/image/upload/v1715636618/Flowers_kr6faw.jpg" />
+              </div>
+              
+          </div>
       </Tab>
-      <Tab eventKey="new-card" title="New Card">
-        <h2>Add a new card</h2>
-          <AddCard />
-      </Tab>
-      <Tab eventKey="your-cards" title="Your Cards">
-        <h2>View your cards</h2>
-            <p>How to use the app: </p>
+          <Tab eventKey="your-cards" title="Your Cards">
+            <div className="instructions">
+              <Card title="Instructions" bordered={false}>
+        <p>How to use the app: </p>
             <ul>
               <li>Click on the card to see the translation</li>
               <li>Click on the trash icon to delete the card</li>
               <li>Click on the pencil icon to edit the card</li>
               <li>You will see four icons: 😀, 😐, 😒 and ✅. After you review the word, choose one of the emotions. When you are sure that you have mastered the word, click on ✅</li>
-            </ul>
-            <Search />
+              </ul>
+      </Card>
+      <Card title="Add a new card" bordered={false}>
+        <AddCard />
+      </Card>
+              <Card title="Find your card" bordered={false}>
+                            <CurrentDate />
+        <Search />
+      </Card>
+      </div>
+
+            
           <CardsList />
       </Tab>
     </Tabs>

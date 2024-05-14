@@ -24,13 +24,13 @@ export default function Search() {
 
     return (
         <div>
-            <h2>Search for the items</h2>
             <form onSubmit={handleSearch}>
         <input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search cards..."
+            placeholder="Search cards..." 
+                    
         />
         <button type="submit">Search</button>
       </form>

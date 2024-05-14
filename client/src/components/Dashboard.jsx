@@ -10,7 +10,7 @@ import AddCard from "./AddCard";
 import CardsList from "./CardsList";
 import RemoveAllCards from "./RemoveAllCards";
 import CurrentDate from "./CurrentDate";
-import Searchbar from "./Searchbar";
+import Search from "./Search";
 function TabPanel(props) {
   const { children, value, index,...other } = props;
 
@@ -164,7 +164,7 @@ function Dashboard() {
               <li>Click on the pencil icon to edit the card</li>
               <li>You will see four icons: 😀, 😐, 😒 and ✅. After you review the word, choose one of the emotions. When you are sure that you have mastered the word, click on ✅</li>
             </ul>
-            <Searchbar />
+            <Search />
           <CardsList />
       </Tab>
     </Tabs>

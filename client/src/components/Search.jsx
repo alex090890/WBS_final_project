@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 
-export default function Searchbar() {
-  const [query, setQuery] = useState('');
+export default function Search() { 
+      const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
 
@@ -22,9 +22,10 @@ export default function Searchbar() {
     setShowResults(false); // Hide the search results
   };
 
-  return (
-    <div>
-      <form onSubmit={handleSearch}>
+    return (
+        <div>
+            <h2>Search for the items</h2>
+            <form onSubmit={handleSearch}>
         <input
           type="text"
           value={query}
@@ -39,7 +40,6 @@ export default function Searchbar() {
         ))}
           </ul>
           {showResults && <button onClick={handleClearResults}>Clear All Results</button>}
-      
-    </div>
-  );
+        </div>
+    )
 }

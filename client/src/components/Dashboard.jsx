@@ -12,7 +12,7 @@ import RemoveAllCards from "./RemoveAllCards";
 import CurrentDate from "./CurrentDate";
 import Search from "./Search";
 import Footer from "./Footer";
-import { Card, Flex, Spin } from 'antd';
+import { Card, Flex, Spin, Input } from 'antd';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -154,13 +154,13 @@ function Dashboard() {
             {isUpdating && (
               <form>
                 <label>First Name:</label>
-                <input type="text" defaultValue={user.firstname} />
+                <Input type="text" defaultValue={user.firstname} />
                 <br />
                 <label>Last Name</label>
-                <input type="text" defaultValue={user.lastname} />
+                <Input type="text" defaultValue={user.lastname} />
                 <br />
                 <label>Email</label>
-                <input type="text" defaultValue={user.email} />
+                <Input type="text" defaultValue={user.email} />
                 <br />
                 <button onClick={(e) => {
                   e.preventDefault();

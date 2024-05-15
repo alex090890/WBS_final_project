@@ -1,7 +1,10 @@
 import Footer from "./Footer";
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router-dom";
 
 export default function HomeEN() {
+    const navigate = useNavigate();
+
     return (
         <div>
             <div className='languageswitcher'>
@@ -11,12 +14,12 @@ export default function HomeEN() {
             </div>
             <div className="header">
                 <div>
-                    <a href="/" className="headerbutton">Головна</a>
-                    <a href="/about" className="headerbutton">Про мене</a>
+                    <a href="/ua" className="headerbutton">Головна</a>
+                    <a href="/ua/about" className="headerbutton">Про мене</a>
                 </div>
                 <div className="logincomponent">
-                    <Button variant="primary" className="regbutton">Увійти</Button>
-                    <Button variant="primary" className="regbutton">Зареєструватися</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/ua/login')}>Увійти</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/ua/register')}>Зареєструватися</Button>
                 </div>
             </div>
             <div className="hero">
@@ -33,12 +36,11 @@ export default function HomeEN() {
                     <li>100% <b>без реклами</b>;</li>
                     <li>Легкий у використанні;</li>
                     <li>Додавайте, змінюйте та видаляйте картки без проблем</li>
-                    <li>Лічильник, який нагадує вам про екзамен</li>
                     <li>Можливість зберегти слова, які ви вивчили</li>
                 </ul>
                 <div className="logincomponent">
-                    <Button variant="primary" className="regbutton">Увійти</Button>
-                    <Button variant="primary" className="regbutton">Зареєструватися</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/ua/login')}>Увійти</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/ua/register')}>Зареєструватися</Button>
                 </div>
             </div>
             <Footer />

@@ -44,11 +44,10 @@ const RegistrationUa = () => {
     try {
       const response = await axios.post('https://wordweb.vercel.app/newuser', newUser);
       localStorage.setItem('token', response.data.token);
-      alert(response.data); // handle the response data
+      alert(response.data);
       setState((prevState) => ({ ...prevState, error: null }));
 
-      // Navigate to the user page after successful registration
-      navigate(`/dashboard/${newUser.login}`);
+      navigate(`/dashboard/ua/${newUser.login}`);
 
     } catch (error) {
       if (error.response && error.response.status === 400) {
@@ -66,36 +65,36 @@ const RegistrationUa = () => {
         <img  className="login-img" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
       </div>
       <div className="reg-form-container">
-        <h1>Create a new account</h1>
+        <h1>Створити новий обліковий запис</h1>
       <form onSubmit={handleSubmit} className='regform'>
         <label>
-          First Name:
+          Ім&#39;я:
           <Input
               type="text"
               className='login-input'
             name="firstname"
             value={state.firstname}
             onChange={handleInputChange}
-              placeholder="John"
+              placeholder="Юлій"
               prefix={<UserOutlined />}
           />
           </label>
           <br />
         <label>
-          Last Name:
+          Прізвище:
           <Input
               type="text"
               className='login-input'
             name="lastname"
             value={state.lastname}
               onChange={handleInputChange}
-              placeholder='Black'
+              placeholder='Цезар'
               prefix={<UserOutlined />}
           />
           </label>
           <br />
         <label>
-          Login:
+          Им&#39;я обликовошл запису:
             <Input
               className='login-input'
             type="text"
@@ -108,7 +107,7 @@ const RegistrationUa = () => {
           </label>
           <br />
         <label>
-          Password:
+          Пароль:
             <Input.Password
               className='login-input'
             type="password"
@@ -116,13 +115,13 @@ const RegistrationUa = () => {
             value={state.password}
               onChange={handleInputChange}
               iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
-              placeholder='Create a strong password'
+              placeholder='Створіть надійний пароль'
               prefix={<RiLockPasswordLine />}
           />
           </label>
           <br />
         <label>
-          Email:
+          Електрона пошта:
             <Input
               className='login-input'
             type="email"
@@ -134,12 +133,12 @@ const RegistrationUa = () => {
           />
           </label>
           <br />
-          <button className="login-btn1" type="submit">Register</button>
-        <p className='or'>or</p>
-        <button className="login-btn1 tologinnav" onClick={() => navigate('/login')}>Login</button>
+          <button className="login-btn1" type="submit">Зареєструватися</button>
+        <p className='or'>або</p>
+        <button className="login-btn1 tologinnav" onClick={() => navigate('/ua/login')}>Увійти</button>
         {state.error && <p>{state.error}</p>}
         </form>
-        <Button variant="primary" className="home-btn" onClick={() => navigate('/')}><FaHome /></Button>
+        <Button variant="primary" className="home-btn" onClick={() => navigate('/ua')}><FaHome /></Button>
     </div>
     </div>
   );

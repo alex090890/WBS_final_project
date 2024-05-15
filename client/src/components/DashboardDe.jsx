@@ -7,12 +7,12 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import './styles/Dashboard.css';
 import AddCardDe from "./AddCardDe";
-import CardsList from "./CardsList";
+import CardsListDe from "./CardsListDe";
 import RemoveAllCardsDe from "./RemoveAllCardsDe";
 import CurrentDate from "./CurrentDate";
 import SearchDe from "./SearchDe";
 import Footer from "./Footer";
-import { Card, Flex, Spin } from 'antd';
+import { Card, Flex, Spin, Input } from 'antd';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -138,7 +138,7 @@ function DashboardDe() {
         <SearchDe />
       </Card>
       </div>
-          <CardsList />
+            <CardsListDe />
           </Tab>
                     <Tab eventKey="profile" title="Konto">
 
@@ -154,13 +154,13 @@ function DashboardDe() {
             {isUpdating && (
               <form>
                 <label>Vorname:</label>
-                <input type="text" defaultValue={user.firstname} />
+                <Input type="text" defaultValue={user.firstname} />
                 <br />
                 <label>Nachname:</label>
-                <input type="text" defaultValue={user.lastname} />
+                <Input type="text" defaultValue={user.lastname} />
                 <br />
                 <label>E-Mail</label>
-                <input type="text" defaultValue={user.email} />
+                <Input type="text" defaultValue={user.email} />
                 <br />
                 <button onClick={(e) => {
                   e.preventDefault();

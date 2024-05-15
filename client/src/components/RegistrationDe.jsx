@@ -134,7 +134,7 @@ const RegistrationDe = () => {
           </label>
           <br />
           <button className="login-btn1" type="submit">Registrieren</button>
-        <p className='or'>or</p>
+        <p className='or'>oder</p>
         <button className="login-btn1 tologinnav" onClick={() => navigate('/de/login')}>Anmelden</button>
         {state.error && <p>{state.error}</p>}
         </form>

@@ -56,28 +56,30 @@ export default function AddCardUa() {
       <div>
         <form onSubmit={handleSubmit}>
           <label>
-            Front Side:
+            Передня сторона:
             <Input
               type="text"
               name="frontside"
               value={state.frontside}
               onChange={handleInputChange}
-              className="input-card"
+                          className="input-card"
+                          placeholder="Введіть слово"
             />
           </label>
           <br />
           <label>
-            Back Side:
+            Зворотня сторона:
             <Input
               type="text"
               name="backside"
               value={state.backside}
               onChange={handleInputChange}
-              className="input-card"
+                          className="input-card"
+                          placeholder="Введіть переклад"
             />
           </label>
           <br />
-          <button type="submit" className="save-cards">Add a new card</button>
+          <button type="submit" className="save-cards">Додати</button>
         </form>
       </div>
       {state.error && <p>{state.error}</p>}

@@ -6,13 +6,13 @@ import Box from '@mui/material/Box';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import './styles/Dashboard.css';
-import AddCard from "./AddCard";
-import CardsList from "./CardsList";
+import AddCardUa from "./AddCardUa";
+import CardsListUa from "./CardsListUa";
 import RemoveAllCards from "./RemoveAllCards";
 import CurrentDate from "./CurrentDate";
-import Search from "./Search";
+import SearchUa from "./SearchUa";
 import Footer from "./Footer";
-import { Card } from 'antd';
+import { Card, Flex, Spin, Input } from 'antd';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -56,16 +56,16 @@ function DashboardUa() {
         if (response.data) {
           setUser(response.data);
         } else {
-          setUser('not found');
+          setUser('Не знайдено');
         }
       })
      .catch((error) => {
         console.error(error);
         if (error.response && error.response.status === 404) {
-          setUser('not found');
+          setUser('Не знайдено');
         } else {
           setUser(null);
-          console.error('Unexpected error:', error);
+          console.error('Непередбачувана помилка', error);
         }
       });
   }, [login]);
@@ -74,10 +74,10 @@ function DashboardUa() {
     try {
       const response = await axios.delete(`https://wordweb.vercel.app/delete/${login}`);
       alert(response.data);
-      navigate('/');
+      navigate('/ua');
     } catch (error) {
       console.log(error);
-      alert('Error deleting user');
+      alert('Користувача не знайдено');
     }
   };
 
@@ -93,7 +93,7 @@ function DashboardUa() {
       })
      .catch((error) => {
         console.log(error);
-        setError('Error updating card');
+        setError('Помилка при оновленні даних користувача');
       });
   };
 
@@ -102,77 +102,81 @@ function DashboardUa() {
   };
 
   if (!user) {
-    return <p>Loading...</p>;
+    return (
+      <Flex align="center" gap="middle">
+    <Spin size="large" />
+  </Flex>
+    );
   } else if (error) {
-    return <p>User is not found</p>;
+    return <p>Користувача не знайдено</p>;
   } else {
     return (
       <div className="dashboard">
-        <h1>Welcome to WordWeb, {user.login}! </h1>
+        <h1>Ласкаво просимо до WordWeb, {user.login}! </h1>
         <Tabs
       defaultActiveKey="your-cards"
       id="justify-tab-example"
       className="mb-3"
       justify
     >
-          <Tab eventKey="your-cards" title="Your Cards">
+          <Tab eventKey="your-cards" title="Картки">
             <div className="instructions">
-              <Card title="Instructions" bordered={false}>
-        <p>How to use the app: </p>
+              <Card title="Инструкції" bordered={false}>
+        <p>Як вікористовувати застосунок: </p>
             <ul>
-              <li>Click on the card to see the translation</li>
-              <li>Click on the trash icon to delete the card</li>
-              <li>Click on the pencil icon to edit the card</li>
-              <li>You will see four icons: 😀, 😐, 😒 and ✅. After you review the word, choose one of the emotions. When you are sure that you have mastered the word, click on ✅</li>
+              <li>Натисніть або кликніть на картку, щоб побачити переклад.</li>
+              <li>Натисніть або клікніть на кощік, щоб відалити картку. </li>
+              <li>Натиснить або кликніть на олівець, щоб зминити картку</li>
+              <li>Ви побачите чотири значки: 😀, 😐, 😒 і ✅. Переглянувши слово, виберіть одну з емоцій. Коли ви впевнені, що вивчили слово, натисніть ✅.</li>
               </ul>
       </Card>
-      <Card title="Add a new card" bordered={false}>
-        <AddCard />
+      <Card title="Додати нову картку" bordered={false}>
+                <AddCardUa />
       </Card>
-              <Card title="Find your card" bordered={false}>
+              <Card title="Знайдіть свою картку" bordered={false}>
                             <CurrentDate />
-        <Search />
+        <SearchUa />
       </Card>
       </div>
-          <CardsList />
+          <CardsListUa />
           </Tab>
-                    <Tab eventKey="profile" title="Your Account">
+                    <Tab eventKey="profile" title="Обліковий запис">
 
             <div className="dashboard-container">
             <div className="account">
                 
-                <Card title="Your Account" className="dashboard-item">
-                  <p>Name: {user.firstname} {user.lastname}</p>
-            <p>Login: {user.login}</p>
-            <p>Email: {user.email}</p>
-            <button onClick={() => navigate('/')} className="update-btn">Logout</button>
-            <button onClick={handleUpdate} className="update-btn">Update</button>
+                <Card title="Ваш обліковий запис" className="dashboard-item">
+                  <p>Ім&#39;я: {user.firstname} {user.lastname}</p>
+            <p>Логін: {user.login}</p>
+            <p>Електрона адреса: {user.email}</p>
+            <button onClick={() => navigate('/ua')} className="update-btn">Вийти</button>
+            <button onClick={handleUpdate} className="update-btn">Змінити</button>
             {isUpdating && (
               <form>
-                <label>First Name:</label>
-                <input type="text" defaultValue={user.firstname} />
+                <label>Ім&#39;я:</label>
+                <Input type="text" defaultValue={user.firstname} />
                 <br />
-                <label>Last Name</label>
-                <input type="text" defaultValue={user.lastname} />
+                <label>Прізвище:</label>
+                <Input type="text" defaultValue={user.lastname} />
                 <br />
-                <label>Email</label>
-                <input type="text" defaultValue={user.email} />
+                <label>Електрона адреса</label>
+                <Input type="text" defaultValue={user.email} />
                 <br />
                 <button onClick={(e) => {
                   e.preventDefault();
                   const firstname = e.target.form[0].value;
                   handleSaveUpdate(firstname, user.lastname, user.password, user.email);
-                }} className="update-btn">Save</button>
-                <button onClick={handleCancelUpdate} className="update-btn">Cancel</button>
+                }} className="update-btn">Зберегти</button>
+                <button onClick={handleCancelUpdate} className="update-btn">Відміна</button>
               </form>
                 )}
                 </Card>
-                <Card title="Danger Zone" className="dashboard-item">
-                  <p>Delete all your cards.</p>
+                <Card title="Налаштування" className="dashboard-item">
+                  <p>Видалити усі картки:</p>
           <RemoveAllCards />
-                                <p>Delete your account</p>
-          <p className="notice">This process is unreversable. All the account information and the flashcards will be deleted.</p>
-          <button onClick={deleteUser} className="delete-btn">Delete account</button>
+                                <p>Видалити Ваш обліковий запис:</p>
+          <p className="notice">Цей процес необоротний. Уся інформація облікового запису та картки буде видалено.</p>
+          <button onClick={deleteUser} className="delete-btn">Видалити обликовий запис</button>
                 </Card>
               </div>
               <div className="emoji-dashboard">

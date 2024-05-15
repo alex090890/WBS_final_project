@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { Input } from 'antd';
-import { Card } from 'antd';
+import { Input, Card, Flex, Spin } from 'antd';
 
 export default function CardList() {
   const { login } = useParams();
@@ -130,7 +129,11 @@ export default function CardList() {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <Flex align="center" gap="middle">
+    <Spin size="large" />
+  </Flex>
+    );
   } else if (error) {
     return <p>{error}</p>;
   } else if (cards.length === 0) {
@@ -148,7 +151,7 @@ export default function CardList() {
         </Card>
         <div>
           <Card title="Your cards:">
-            <p>You have {cards.length + 1} cards</p>
+            <p>You have {cards.length} cards</p>
         <ul className="cards-list">
           {cards.map((card) => (
             <li key={card._id}

@@ -31,7 +31,7 @@ export default function LoginUa() {
     const { login, email, password } = state;
 
     if (!login) {
-      setState((prevState) => ({...prevState, error: "Login is required" }));
+      setState((prevState) => ({...prevState, error: "Потрібно увійти" }));
       return;
     }
 
@@ -44,18 +44,17 @@ export default function LoginUa() {
     try {
       const response = await axios.post("https://wordweb.vercel.app/login", user);
       localStorage.setItem('token', response.data.token);
-      alert(`Welcome back, ${user.login}!`); // handle the response
+      alert(`Welcome back, ${user.login}!`);
       setState((prevState) => ({...prevState, error: null }));
       console.log(response);
-      // Navigate to the user page after successful login
-      navigate(`/dashboard/${login}`);
+      navigate(`/dashboard/ua/${login}`);
 
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setState((prevState) => ({...prevState, error: error.response.data }));
       } else {
         console.log(error);
-        setState((prevState) => ({...prevState, error: "An unknown error occurred" }));
+        setState((prevState) => ({...prevState, error: "Виникла помилка" }));
       }
     }
   };
@@ -66,13 +65,13 @@ export default function LoginUa() {
         <img  className="login-img" src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" />
       </div>
       <div className="login-form-container">
-        <h1>Login to your account</h1>
+        <h1>Увійдіть до свого облікового запису</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          Login:
+          Логін:
             <Input
               prefix={<UserOutlined />}
-              placeholder="Enter your username"
+              placeholder="Введіть свій логін"
             type="text"
             name="login"
             value={state.login}
@@ -82,9 +81,9 @@ export default function LoginUa() {
         </label>
         <br />
         <label>
-          Password:
+          Пароль:
             <Input.Password
-              placeholder="Enter your password"
+              placeholder="Введіть свій пароль"
               prefix={<RiLockPasswordLine />}
             type="password"
             name="password"
@@ -95,15 +94,15 @@ export default function LoginUa() {
           />
         </label>
           <br />
-          <button className="login-btn1">Login</button>
+          <button className="login-btn1">Увійти</button>
       </form>
         {state.error && <p>{state.error}</p>}
-        <p>* Forgot your password? Send an email to <a href="mailto: alexprof_web.de" target="_blank">alex_prof@web.de</a></p>
+        <p>* Забулі свий пароль або логин? Напішіть мені на адресу <a href="mailto: alexprof_web.de" target="_blank">alex_prof@web.de</a></p>
         <hr />
-        <p>Don&#39;t have an account?</p>
-        <button className="login-btn1" onClick={() => navigate('/register')}>Sign Up</button>
+        <p>Ще не маєте обликового запису?</p>
+        <button className="login-btn1" onClick={() => navigate('/ua/register')}>Sign Up</button>
       </div>
-      <Button variant="primary" className="home-btn" onClick={() => navigate('/')}><FaHome /></Button>
+      <Button variant="primary" className="home-btn" onClick={() => navigate('/ua')}><FaHome /></Button>
     </div>
   );
 }

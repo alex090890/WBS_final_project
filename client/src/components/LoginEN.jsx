@@ -1,10 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Input } from 'antd';
+import { Input, Button } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { RiLockPasswordLine } from "react-icons/ri";
+import { FaHome } from "react-icons/fa";
 
 
 export default function LoginEN() {
@@ -102,6 +103,7 @@ export default function LoginEN() {
         <p>Don&#39;t have an account?</p>
         <button className="login-btn1" onClick={() => navigate('/register')}>Sign Up</button>
       </div>
+      <Button variant="primary" className="home-btn" onClick={() => navigate('/')}><FaHome /></Button>
     </div>
   );
 }

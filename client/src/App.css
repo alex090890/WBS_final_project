@@ -61,6 +61,7 @@
 
 .regbutton {
   margin: 10px;
+  box-shadow: 0 0 10px rgba(71, 170, 205, 0.685);
 }
 
 .main {
@@ -72,9 +73,10 @@
 }
 
 .introcard {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
   justify-content: space-between;
-  align-items: center;
   padding: 10px 20px;
   background-color: #fff;
   border-bottom: 1px solid #f2f2f2;
@@ -109,8 +111,17 @@
 
 .reg-form-container {
   position: relative;
-  top: 5%;
   margin-left: 50px;
+}
+
+.or {
+  display: inline;
+}
+
+.home-btn {
+    position: fixed;
+  bottom: 20px;
+  right: 20px;
 }
 
 .login-input {
@@ -126,12 +137,13 @@ label {
 }
 
 .login-btn1 {
-  margin: 10px;
+  margin: 5px;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #351bcc;
   background-color: #351bcc;
   color: #ffffff;
+  width: 100px;
 }
 
 .dashboard {
@@ -213,6 +225,21 @@ label {
 }
 
 @media screen and (max-width: 600px) {
+  .header {
+    display: block;
+    margin: 20px;
+  }
+
+  .hero>h1 {
+  font-size: 50px;
+  color: rgb(217, 255, 0);
+}
+
+.hero>h2 {
+  font-size: 30px;
+  color: rgb(217, 255, 0);
+}
+
   .login-container {
     display: block;
   }
@@ -249,5 +276,14 @@ label {
 
   .cards-list {
     grid-template-columns: 1fr;
+  }
+
+  .introcard {
+    display: block;
+    margin: 20px;
+  }
+
+  .about-desc {
+    width: 100%;
   }
 }

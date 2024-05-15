@@ -12,7 +12,7 @@ import RemoveAllCards from "./RemoveAllCards";
 import CurrentDate from "./CurrentDate";
 import Search from "./Search";
 import Footer from "./Footer";
-import { Card, Flex, Spin } from 'antd';
+import { Card } from 'antd';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,7 +41,7 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function Dashboard() {
+function DashboardDe() {
   const { login } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -102,11 +102,7 @@ function Dashboard() {
   };
 
   if (!user) {
-    return (
-      <Flex align="center" gap="middle">
-    <Spin size="large" />
-  </Flex>
-    );
+    return <p>Loading...</p>;
   } else if (error) {
     return <p>User is not found</p>;
   } else {
@@ -191,4 +187,4 @@ function Dashboard() {
   }
 }
 
-export default Dashboard;
+export default DashboardDe;

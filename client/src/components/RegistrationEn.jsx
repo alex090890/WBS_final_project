@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Input } from 'antd';
+import { Input, Button } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined, MailOutlined } from '@ant-design/icons';
 import { RiLockPasswordLine } from "react-icons/ri";
+import { FaHome } from "react-icons/fa";
 
 const RegistrationEn = () => {
   
@@ -66,7 +67,7 @@ const RegistrationEn = () => {
       </div>
       <div className="reg-form-container">
         <h1>Create a new account</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className='regform'>
         <label>
           First Name:
           <Input
@@ -133,12 +134,12 @@ const RegistrationEn = () => {
           />
           </label>
           <br />
-        <button className="login-btn1" type="submit">Register</button>
+          <button className="login-btn1" type="submit">Register</button>
+        <p className='or'>or</p>
+        <button className="login-btn1 tologinnav" onClick={() => navigate('/login')}>Login</button>
         {state.error && <p>{state.error}</p>}
         </form>
-        <hr />
-        <p>Already have an account?</p>
-        <button className="login-btn1" onClick={() => navigate('/login')}>Login</button>
+        <Button variant="primary" className="home-btn" onClick={() => navigate('/')}><FaHome /></Button>
     </div>
     </div>
   );

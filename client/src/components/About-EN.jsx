@@ -30,11 +30,11 @@ export default function AboutEN() {
             <div className="main">
                 <h1>About me</h1>
                 <div className="introcard">
-                    <Card hoverable style={{ width: 240, }} cover={<img alt="example" src="/Bewerbungsbild.jpg" />}>
+                    <Card hoverable cover={<img alt="example" src="/Bewerbungsbild.jpg" />}>
                         <Meta title="Oleksandr Lazurenko" description="www.alexprof.site" />
                     </Card>
                     <Space direction="vertical" size={16}>
-                        <Card title="About me" style={{width: 600,}}>
+                        <Card title="About me" className="about-desc">
                             <p>I am a fullstack developer who can gladly provide services in creaing web apps, including frontend and backend</p>
                             <p>My main stack is MERN (MongoDB, Express, React, Node.js)</p>
                             <p>Please feel free to follow me and write to me if you feel any questions.</p>

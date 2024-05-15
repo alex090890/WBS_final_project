@@ -10,6 +10,8 @@ import AboutUA from './components/About-UA';
 import LoginEN from './components/LoginEN';
 import RegistrationEn from './components/RegistrationEn';
 import Dashboard from "./components/Dashboard";
+import DashboardUa from './components/DashboardUa';
+import DashboardDe from './components/DashboardDe';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const PrivateRoute = () => {
@@ -32,6 +34,8 @@ export default function App() {
         <Route path='/register' element={<RegistrationEn />} />
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard/:login" element={<Dashboard />} />
+          <Route path="/dashboard/ua/:login" element={<DashboardUa />} />
+          <Route path="/dashboard/de/:login" element={<DashboardDe />} />
         </Route>
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>

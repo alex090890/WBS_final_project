@@ -110,12 +110,33 @@ function Dashboard() {
       <div className="dashboard">
         <h1>Welcome to WordWeb, {user.login}! </h1>
         <Tabs
-      defaultActiveKey="profile"
+      defaultActiveKey="your-cards"
       id="justify-tab-example"
       className="mb-3"
       justify
     >
-          <Tab eventKey="profile" title="Your Account">
+          <Tab eventKey="your-cards" title="Your Cards">
+            <div className="instructions">
+              <Card title="Instructions" bordered={false}>
+        <p>How to use the app: </p>
+            <ul>
+              <li>Click on the card to see the translation</li>
+              <li>Click on the trash icon to delete the card</li>
+              <li>Click on the pencil icon to edit the card</li>
+              <li>You will see four icons: 😀, 😐, 😒 and ✅. After you review the word, choose one of the emotions. When you are sure that you have mastered the word, click on ✅</li>
+              </ul>
+      </Card>
+      <Card title="Add a new card" bordered={false}>
+        <AddCard />
+      </Card>
+              <Card title="Find your card" bordered={false}>
+                            <CurrentDate />
+        <Search />
+      </Card>
+      </div>
+          <CardsList />
+          </Tab>
+                    <Tab eventKey="profile" title="Your Account">
 
             <div className="dashboard-container">
             <div className="account">
@@ -158,27 +179,6 @@ function Dashboard() {
                 <img className="dashboard-img" src="https://res.cloudinary.com/dosvnb1kk/image/upload/v1715636618/Flowers_kr6faw.jpg" />
               </div>
             </div>
-      </Tab>
-          <Tab eventKey="your-cards" title="Your Cards">
-            <div className="instructions">
-              <Card title="Instructions" bordered={false}>
-        <p>How to use the app: </p>
-            <ul>
-              <li>Click on the card to see the translation</li>
-              <li>Click on the trash icon to delete the card</li>
-              <li>Click on the pencil icon to edit the card</li>
-              <li>You will see four icons: 😀, 😐, 😒 and ✅. After you review the word, choose one of the emotions. When you are sure that you have mastered the word, click on ✅</li>
-              </ul>
-      </Card>
-      <Card title="Add a new card" bordered={false}>
-        <AddCard />
-      </Card>
-              <Card title="Find your card" bordered={false}>
-                            <CurrentDate />
-        <Search />
-      </Card>
-      </div>
-          <CardsList />
       </Tab>
         </Tabs>
         <Footer />

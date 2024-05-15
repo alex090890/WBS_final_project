@@ -6,13 +6,13 @@ import Box from '@mui/material/Box';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import './styles/Dashboard.css';
-import AddCard from "./AddCard";
+import AddCardDe from "./AddCardDe";
 import CardsList from "./CardsList";
-import RemoveAllCards from "./RemoveAllCards";
+import RemoveAllCardsDe from "./RemoveAllCardsDe";
 import CurrentDate from "./CurrentDate";
-import Search from "./Search";
+import SearchDe from "./SearchDe";
 import Footer from "./Footer";
-import { Card } from 'antd';
+import { Card, Flex, Spin } from 'antd';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -74,7 +74,7 @@ function DashboardDe() {
     try {
       const response = await axios.delete(`https://wordweb.vercel.app/delete/${login}`);
       alert(response.data);
-      navigate('/');
+      navigate('/de');
     } catch (error) {
       console.log(error);
       alert('Error deleting user');
@@ -102,77 +102,81 @@ function DashboardDe() {
   };
 
   if (!user) {
-    return <p>Loading...</p>;
+    return (
+      <Flex align="center" gap="middle">
+    <Spin size="large" />
+  </Flex>
+    );
   } else if (error) {
-    return <p>User is not found</p>;
+    return <p>Benutzer wurde nicht gefunden</p>;
   } else {
     return (
       <div className="dashboard">
-        <h1>Welcome to WordWeb, {user.login}! </h1>
+        <h1>Willkommen zu WordWeb, {user.login}! </h1>
         <Tabs
       defaultActiveKey="your-cards"
       id="justify-tab-example"
       className="mb-3"
       justify
     >
-          <Tab eventKey="your-cards" title="Your Cards">
+          <Tab eventKey="your-cards" title="Karten">
             <div className="instructions">
-              <Card title="Instructions" bordered={false}>
-        <p>How to use the app: </p>
+              <Card title="Anweisungen" bordered={false}>
+        <p>So nutzen Sie die App: </p>
             <ul>
-              <li>Click on the card to see the translation</li>
-              <li>Click on the trash icon to delete the card</li>
-              <li>Click on the pencil icon to edit the card</li>
-              <li>You will see four icons: 😀, 😐, 😒 and ✅. After you review the word, choose one of the emotions. When you are sure that you have mastered the word, click on ✅</li>
+              <li>Klicken Sie auf die Karte, um die Übersetzung anzuzeigen.</li>
+              <li>Klicken Sie auf das Papierkorbsymbol, um die Karte zu löschen.</li>
+              <li>Klicken Sie auf das Stiftsymbol, um die Karte zu bearbeiten.</li>
+              <li>Sie sehen vier Symbole: 😀, 😐, 😒 und ✅. Nachdem Sie das Wort wiederholt haben, wählen Sie eine der Emotionen aus. Wenn Sie sicher sind, dass Sie das Wort beherrschen, klicken Sie auf ✅.</li>
               </ul>
       </Card>
-      <Card title="Add a new card" bordered={false}>
-        <AddCard />
+      <Card title="Neue Karte" bordered={false}>
+        <AddCardDe />
       </Card>
-              <Card title="Find your card" bordered={false}>
+              <Card title="Suchen Sie Ihre Karte" bordered={false}>
                             <CurrentDate />
-        <Search />
+        <SearchDe />
       </Card>
       </div>
           <CardsList />
           </Tab>
-                    <Tab eventKey="profile" title="Your Account">
+                    <Tab eventKey="profile" title="Konto">
 
             <div className="dashboard-container">
             <div className="account">
                 
-                <Card title="Your Account" className="dashboard-item">
+                <Card title="Ihr Konto" className="dashboard-item">
                   <p>Name: {user.firstname} {user.lastname}</p>
-            <p>Login: {user.login}</p>
-            <p>Email: {user.email}</p>
-            <button onClick={() => navigate('/')} className="update-btn">Logout</button>
-            <button onClick={handleUpdate} className="update-btn">Update</button>
+            <p>Benutzername: {user.login}</p>
+            <p>E-Mail: {user.email}</p>
+            <button onClick={() => navigate('/')} className="update-btn">Abmelden</button>
+            <button onClick={handleUpdate} className="update-btn">Aktualisieren</button>
             {isUpdating && (
               <form>
-                <label>First Name:</label>
+                <label>Vorname:</label>
                 <input type="text" defaultValue={user.firstname} />
                 <br />
-                <label>Last Name</label>
+                <label>Nachname:</label>
                 <input type="text" defaultValue={user.lastname} />
                 <br />
-                <label>Email</label>
+                <label>E-Mail</label>
                 <input type="text" defaultValue={user.email} />
                 <br />
                 <button onClick={(e) => {
                   e.preventDefault();
                   const firstname = e.target.form[0].value;
                   handleSaveUpdate(firstname, user.lastname, user.password, user.email);
-                }} className="update-btn">Save</button>
+                }} className="update-btn">Speichern</button>
                 <button onClick={handleCancelUpdate} className="update-btn">Cancel</button>
               </form>
                 )}
                 </Card>
-                <Card title="Danger Zone" className="dashboard-item">
-                  <p>Delete all your cards.</p>
-          <RemoveAllCards />
-                                <p>Delete your account</p>
-          <p className="notice">This process is unreversable. All the account information and the flashcards will be deleted.</p>
-          <button onClick={deleteUser} className="delete-btn">Delete account</button>
+                <Card title="Gefahrenzone" className="dashboard-item">
+                  <p>Ihre Karten löschen:</p>
+          <RemoveAllCardsDe />
+                                <p>Ihr Konto löschen</p>
+          <p className="notice">Dieser Vorgang ist unumkehrbar. Alle Kontoinformationen und Lernkarten werden gelöscht.</p>
+          <button onClick={deleteUser} className="delete-btn">Konto löschen</button>
                 </Card>
               </div>
               <div className="emoji-dashboard">

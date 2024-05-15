@@ -36,7 +36,7 @@ export default function HomeEN() {
                     <li>100% <b>ad-free</b>;</li>
                     <li>Easy to use;</li>
                     <li>Add, edit, delete flashcards anytime you wish</li>
-                    <li>An exam countdown that is a good reminder and motivator</li>
+                    <li>Easy-to-use design</li>
                 </ul>
                 <div className="logincomponent">
                     <Button variant="primary" className="regbutton" onClick={() => navigate('/login')}>Login</Button>

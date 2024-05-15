@@ -4,8 +4,11 @@ import { Card, Space } from 'antd';
 const { Meta } = Card;
 import { FaLinkedin, FaFacebook, FaInstagramSquare } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
 
 export default function AboutEN() {
+    const navigate = useNavigate();
+
     return (
         <div>
             <div className='languageswitcher'>
@@ -19,8 +22,8 @@ export default function AboutEN() {
                     <a href="/about" className="headerbutton">About</a>
                 </div>
                 <div className="logincomponent">
-                    <Button variant="primary" className="regbutton">Login</Button>
-                    <Button variant="primary" className="regbutton">Register</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/login')}>Login</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/register')}>Register</Button>
                 </div>
             </div>
             <div className="hero">

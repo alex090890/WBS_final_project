@@ -1,7 +1,10 @@
 import Footer from "./Footer";
 import Button from 'react-bootstrap/Button';
+import { useNavigate } from "react-router-dom";
 
 export default function HomeEN() {
+    const navigate = useNavigate();
+
     return (
         <div>
             <div className='languageswitcher'>
@@ -11,12 +14,12 @@ export default function HomeEN() {
             </div>
             <div className="header">
                 <div>
-                    <a href="/" className="headerbutton">Startenseite</a>
-                    <a href="/about" className="headerbutton">Über uns</a>
+                    <a href="/de" className="headerbutton">Startenseite</a>
+                    <a href="/de/about" className="headerbutton">Über mich</a>
                 </div>
                 <div className="logincomponent">
-                    <Button variant="primary" className="regbutton">Anmelden</Button>
-                    <Button variant="primary" className="regbutton">Registrieren</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/de/login')}>Anmelden</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/de/register')}>Registrieren</Button>
                 </div>
             </div>
             <div className="hero">
@@ -33,11 +36,11 @@ export default function HomeEN() {
                     <li>100% <b>Werbung-frei</b>;</li>
                     <li>Einfach zu nutzen;</li>
                     <li>Sie können Karteikarten jederzeit hinzufügen, bearbeiten oder löschen</li>
-                    <li>Ein Prüfungscountdown, der eine gute Erinnerung und Motivation ist</li>
+                    <li>Benutzerfreundliches Design</li>
                 </ul>
                 <div className="logincomponent">
-                    <Button variant="primary" className="regbutton">Anmelden</Button>
-                    <Button variant="primary" className="regbutton">Registrieren</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/de/login')}>Anmelden</Button>
+                    <Button variant="primary" className="regbutton" onClick={() => navigate('/de/register')}>Registrieren</Button>
                 </div>
             </div>
             <Footer />

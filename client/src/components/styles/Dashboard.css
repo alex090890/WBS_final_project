@@ -2,6 +2,7 @@
     display: grid;
     grid-template-columns: 75% 25%;
     justify-items: center;
+    box-shadow: 0 0 10px rgba(71, 170, 205, 0.685);
 }
 
 .account {
@@ -9,11 +10,14 @@
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-bottom: 20px;
+}
 
+.dashboard-item {
+    width: 100%;
 }
 
 .dashboard-img {
-    width: 70%;
+    width: 100%;
     position: sticky;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
@@ -25,6 +29,7 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
     margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(71, 170, 205, 0.685);
 }
 
 .statistics {
@@ -32,18 +37,47 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+.cards {
+    box-shadow: 0 0 10px rgba(71, 170, 205, 0.685);
+}
 
+.notice {
+    color: red;
+}
 
 @media screen and (max-width: 768px) {
     .dashboard-container {
         display: grid;
         grid-template-columns: 1fr;
-        width: 50%;
+        width: 100%;
     }
 
     .statistics {
         display: grid;
         grid-template-columns: 1fr 1fr;
+    }
+
+    .instructions {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+
+    .account {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .dashboard-item {
+        width: 100%;
+    }
+
+    .dashboard-img {
+        width: 100%;
+        position: sticky;
+        border-top-right-radius: 50px;
+        border-bottom-right-radius: 50px;
+        column-gap: 20px;
     }
 
 }

@@ -1,18 +1,19 @@
 .digital-clock {
   font-family: 'Digital-7', monospace;
   font-size: 28px;
-  color: #33cc33;
+  color: rgba(71, 170, 205, 0.685);
   text-align: center;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(71, 170, 205, 0.685);
+  width: 100%;
 }
 
 
 @media screen and (max-width: 768px) {
   .digital-clock {
     font-size: 24px;
-    width: 200px;
+    width: 100%;
   }
 }

@@ -137,8 +137,8 @@ export default function CardList() {
     return <p>No cards found</p>;
   } else {
     return (
-      <div>
-        <Card title="Your statistics:">
+      <div className="cards">
+        <Card title="Your statistics:" className="cards">
           <div className="statistics">
                 <Card style={gridStyle}>Mastered: <br /> {cardCounts.mastered}</Card>
     <Card style={gridStyle} className="stats-item">Good: <br />{cardCounts.good}</Card>
@@ -195,8 +195,8 @@ export default function CardList() {
                     const front = e.target.form[0].value;
                     const back = e.target.form[1].value;
                     handleSaveUpdate(card._id, front, back, card.isCardLearned);
-                  }}>Save</button>
-                  <button onClick={() => handleCancelUpdate(card._id)}>Cancel</button>
+                  }} className="card-update-btn">Save</button>
+                  <button onClick={() => handleCancelUpdate(card._id)} className="card-update-btn">Cancel</button>
                 </form>
               )}
             </li>

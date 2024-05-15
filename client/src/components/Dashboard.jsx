@@ -11,6 +11,7 @@ import CardsList from "./CardsList";
 import RemoveAllCards from "./RemoveAllCards";
 import CurrentDate from "./CurrentDate";
 import Search from "./Search";
+import Footer from "./Footer";
 import { Card } from 'antd';
 
 function TabPanel(props) {
@@ -119,7 +120,7 @@ function Dashboard() {
             <div className="dashboard-container">
             <div className="account">
                 
-                <Card title="Your Account">
+                <Card title="Your Account" className="dashboard-item">
                   <p>Name: {user.firstname} {user.lastname}</p>
             <p>Login: {user.login}</p>
             <p>Email: {user.email}</p>
@@ -145,19 +146,18 @@ function Dashboard() {
               </form>
                 )}
                 </Card>
-                <Card title="Danger Zone">
-                                <h2>Delete your account</h2>
-          <p>This process is unreversable. </p>
-          <button onClick={deleteUser} className="delete-btn">Delete account</button>
-          <h2>Delete all your cards</h2>
+                <Card title="Danger Zone" className="dashboard-item">
+                  <p>Delete all your cards.</p>
           <RemoveAllCards />
+                                <p>Delete your account</p>
+          <p className="notice">This process is unreversable. All the account information and the flashcards will be deleted.</p>
+          <button onClick={deleteUser} className="delete-btn">Delete account</button>
                 </Card>
               </div>
               <div className="emoji-dashboard">
                 <img className="dashboard-img" src="https://res.cloudinary.com/dosvnb1kk/image/upload/v1715636618/Flowers_kr6faw.jpg" />
               </div>
-              
-          </div>
+            </div>
       </Tab>
           <Tab eventKey="your-cards" title="Your Cards">
             <div className="instructions">
@@ -178,12 +178,11 @@ function Dashboard() {
         <Search />
       </Card>
       </div>
-
-            
           <CardsList />
       </Tab>
-    </Tabs>
-        </div>
+        </Tabs>
+        <Footer />
+      </div>
     );
   }
 }

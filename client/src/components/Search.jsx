@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { Input } from 'antd';
+import { CiSearch } from "react-icons/ci";
 
 export default function Search() { 
       const [query, setQuery] = useState('');
@@ -25,21 +27,23 @@ export default function Search() {
     return (
         <div>
             <form onSubmit={handleSearch}>
-        <input
+        <Input
           type="text"
-          value={query}
+            value={query}
+            prefix={ <CiSearch />}
           onChange={(e) => setQuery(e.target.value)}
             placeholder="Search cards..." 
+            className='search-input'
                     
         />
-        <button type="submit">Search</button>
+        <button type="submit" className='search-btn'>Search</button>
       </form>
       <ul>
         {showResults && results.map((card) => (
           <li key={card._id}>{card.front} - {card.back}</li>
         ))}
           </ul>
-          {showResults && <button onClick={handleClearResults}>Clear All Results</button>}
+          {showResults && <button onClick={handleClearResults} className='search-btn'>Clear All Results</button>}
         </div>
     )
 }

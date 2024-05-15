@@ -165,16 +165,31 @@ label {
 .back-side {
   padding-left: 5px;
   border: 1px solid rgb(226, 226, 226);
+  border-radius: 10px;
 }
 
-.save-cards, .delete-btn, .update-btn {
+.front-side:hover, .back-side:hover {
+  background-color: rgb(124, 133, 203);
+  box-shadow: 0 0 10px rgba(145, 231, 234, 0.746);
+} 
+
+.save-cards, .delete-btn, .update-btn, .search-btn, .card-update-btn {
   background-color: rgb(0, 0, 255);
   border: none;
   margin: 10px;
   color: white;
+  padding: 10px;
+  border-radius: 5px;;
 }
 
+.save-cards:hover, .delete-btn:hover, .update-btn:hover, .search-btn:hover, .card-update-btn:hover {
+  background-color: rgb(72, 72, 189);
+  box-shadow: #351bcc 0px 0px 10px 0px;
+}
 
+.search-input {
+  margin-top: 10px;
+}
 
 .input-card {
   min-width: 200px;
@@ -191,6 +206,10 @@ label {
 .flash-btn:hover {
   background-color: rgb(72, 72, 189);
   border-radius: 50%;
+}
+
+.cards {
+  margin-top: 20px;
 }
 
 @media screen and (max-width: 600px) {

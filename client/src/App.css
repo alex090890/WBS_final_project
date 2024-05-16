@@ -264,6 +264,7 @@ label {
 
   .login-container {
     display: block;
+    padding: 20px;
   }
 
   .login-img {

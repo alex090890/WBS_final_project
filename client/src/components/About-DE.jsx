@@ -10,7 +10,7 @@ export default function AboutDe() {
     const navigate = useNavigate();
 
     return (
-        <div>
+        <div className="home-container">
             <div className='languageswitcher'>
                 <a href="/" className='lang'><img src='/united-states-of-america.png' className="langimg" /></a>
                 <a href="/de" className='lang'><img src='/germany.png' className='langimg' /></a>

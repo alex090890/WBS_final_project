@@ -1,3 +1,20 @@
+body {
+  margin: 0; /* Remove default margin from body */
+}
+
+.home-container {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden; /* Add this to remove vertical scrollbar */
+  padding: 0;
+  margin: 0;
+}
+
+.content {
+  margin: 0; /* Center the content horizontally */
+  max-width: 1200px; /* Set a maximum width for the content */
+}
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -5,7 +22,7 @@
   padding: 10px 20px;
   background-color: #fff;
   border-bottom: 1px solid #f2f2f2;
-  width: 100%;
+  width: 100vw;
 }
 
 .languageswitcher {
@@ -35,15 +52,18 @@
   border-bottom: 5px solid rgb(0, 0, 255);
 }
 
+.langimg {
+  width: 20px;
+}
+
 .hero {
-  width: 100%;
+  width: 100vw;
   height: 400px;
   background-image: url('https://res.cloudinary.com/dosvnb1kk/image/upload/v1715805031/Hero_pz9te7.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
   padding-top: 50px;
-
 }
 
 .hero>h1 {
@@ -58,10 +78,6 @@
   font-weight: bolder;
 }
 
-.langimg {
-  width: 20px;
-}
-
 .regbutton {
   margin: 10px;
   box-shadow: 0 0 10px rgba(71, 170, 205, 0.685);
@@ -70,7 +86,7 @@
 .main {
   margin: 10px 0;
   width: 100%;
-  margin: 10px 40px;
+  padding: 20px;
 }
 
 .main>h1 {
@@ -228,6 +244,7 @@ label {
 .cards {
   margin-top: 20px;
 }
+
 
 @media screen and (max-width: 600px) {
   .header {

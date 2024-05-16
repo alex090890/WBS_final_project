@@ -27,23 +27,17 @@ export default function HomeEN() {
                 <h1>WordWeb</h1>
                 <h2>A free easy website to make flashcards!</h2>
             </div>
-            <div className="main">
-                <h1>Welcome to WordWeb!</h1>
-                <p>Are you looking for a free website that can become an important tool in learning a language?</p>
-                <p>Well, you can breathe easily as your long search is over!</p>
-                <h3>Here are the key features:</h3>
-                <ul>
-                    <li>Completely <b>cost-free</b>;</li>
-                    <li>100% <b>ad-free</b>;</li>
-                    <li>Easy to use;</li>
-                    <li>Add, edit, delete flashcards anytime you wish</li>
-                    <li>Easy-to-use design</li>
-                </ul>
-                <div className="logincomponent">
-                    <Button variant="primary" className="regbutton" onClick={() => navigate('/login')}>Login</Button>
-                    <Button variant="primary" className="regbutton" onClick={() => navigate('/register')}>Register</Button>
+                <div className="welcome-div">
+                    <div className="welcome-container">
+                    <div className="main">
+                            <h1 className="welcome-header">Welcome to WordWeb!</h1>
+                            <img src="https://res.cloudinary.com/dosvnb1kk/image/upload/v1715880929/Main_Features_1_rk7zzv.png" className="welcome-img" />
+                    
+                <p className="welcome-text">Are you looking for a free website that can become an important tool in learning a language?</p>
+                    <p className="welcome-text">Well, you can breathe easily as your long search is over!</p>
                 </div>
-            </div>
+                </div>
+                </div>
             </div>
            <Footer />
         </div>

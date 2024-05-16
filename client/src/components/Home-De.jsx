@@ -26,23 +26,17 @@ export default function HomeEN() {
                 <h1>WordWeb</h1>
                 <h2>Eine kostenlose, einfache Website, auf der Sie sich alles merken können!</h2>
             </div>
-            <div className="main">
-                <h1>Willkommen zu WordWeb!</h1>
-                <p>Suchen Sie nach einer kostenlosen Website, die ein wichtiges Hilfsmittel beim Erlernen einer Sprache sein kann?</p>
-                <p>Nun, Sie können beruhigt aufatmen, denn Ihre lange Suche hat ein Ende!</p>
-                <h3>Hier sind die wichtigsten Funktionen:</h3>
-                <ul>
-                    <li>Ganz <b>kostenlos</b>;</li>
-                    <li>100% <b>Werbung-frei</b>;</li>
-                    <li>Einfach zu nutzen;</li>
-                    <li>Sie können Karteikarten jederzeit hinzufügen, bearbeiten oder löschen</li>
-                    <li>Benutzerfreundliches Design</li>
-                </ul>
-                <div className="logincomponent">
-                    <Button variant="primary" className="regbutton" onClick={() => navigate('/de/login')}>Anmelden</Button>
-                    <Button variant="primary" className="regbutton" onClick={() => navigate('/de/register')}>Registrieren</Button>
+        <div className="welcome-div">
+                    <div className="welcome-container">
+                    <div className="main">
+                            <h1 className="welcome-header">Willkommen zu WordWeb!</h1>
+                            <img src="https://res.cloudinary.com/dosvnb1kk/image/upload/v1715882574/Main_Features_2_eiyzso.png" className="welcome-img" />
+                    
+                <p className="welcome-text">Suchen Sie nach einer kostenlosen Website, die ein wichtiges Hilfsmittel beim Erlernen einer Sprache sein kann?</p>
+                    <p className="welcome-text">Nun, Sie können beruhigt aufatmen, denn Ihre lange Suche hat ein Ende!</p>
                 </div>
-            </div>
+                </div>
+                </div>
             <Footer />
         </div>
     )

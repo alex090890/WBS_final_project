@@ -26,7 +26,7 @@ export default function HomeEN() {
                 <h1>WordWeb</h1>
                 <h2>Легкий безкоштовний сервіс для вивчення нових слів</h2>
             </div>
-            <div className="main">
+            {/*<div className="main">
                 <h1>Ласкаво просимо до WordWeb!</h1>
                 <p>Ви шукаєте безкоштовний сервіс для вивчення мови?</p>
                 <p>Що ж, ви можете видихнути спокійно, оскільки ваш пошук дійшов до кінця!</p>
@@ -42,7 +42,17 @@ export default function HomeEN() {
                     <Button variant="primary" className="regbutton" onClick={() => navigate('/ua/login')}>Увійти</Button>
                     <Button variant="primary" className="regbutton" onClick={() => navigate('/ua/register')}>Зареєструватися</Button>
                 </div>
-            </div>
+    </div>*/}
+                            <div className="welcome-div">
+                    <div className="welcome-container">
+                    <div className="main">
+                            <h1 className="welcome-header">Ласкаво просимо до WordWeb!</h1>
+                            <img src="https://res.cloudinary.com/dosvnb1kk/image/upload/v1715884259/Main_Features_3_wmf92p.png" className="welcome-img" />
+                <p className="welcome-text">Ви шукаєте безкоштовний сервіс для вивчення мови?</p>
+                <p className="welcome-text">Що ж, ви можете видихнути спокійно, оскільки ваш пошук добіг до кінця!</p>
+                </div>
+                </div>
+                </div>
             <Footer />
         </div>
     )

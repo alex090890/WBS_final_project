@@ -83,10 +83,14 @@ body {
   box-shadow: 0 0 10px rgba(71, 170, 205, 0.685);
 }
 
+.regbutton-bottom {
+  width: 100px;
+}
+
 .main {
   margin: 10px 0;
-  width: 100%;
-  padding: 20px;
+  width: 100vw;
+  text-align: center;
 }
 
 .main>h1 {
@@ -245,6 +249,26 @@ label {
   margin-top: 20px;
 }
 
+.welcome-header {
+  text-align: center;
+  font-family: 'Comic Sans MS', sans-serif;
+  width: 100vw;
+  padding-top: 20px;
+}
+
+.welcome-text {
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  width: 100vw;
+}
+
+.welcome-img {
+  width: 40%;
+  margin-top: 40px;
+  height: 80%;
+  text-align: center;
+  margin: 20px auto;
+}
 
 @media screen and (max-width: 600px) {
   .header {

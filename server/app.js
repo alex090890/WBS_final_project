@@ -5,23 +5,21 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
-
-
 
 config();
 const jwtSecret = process.env.SECRET_KEY;
 
-console.log(jwtSecret);
+//console.log(jwtSecret);
 
 const uri = "mongodb+srv://alexprofteach:JANnHALJute10Lsr@cluster0.0ls7xoz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true
-  }
+const client = new MongoClient(
+  uri, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true
+    }
 });
 
 const flashcardsClient = new MongoClient(uri, {
@@ -43,18 +41,16 @@ async function run() {
 }
 run().catch(console.dir);
 
-const port = process.env.PORT || 3000; // add a default port if env variable is not set
+const port = process.env.PORT || 3000;
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-
-
-// Создание токена
+// Token creation
 const token = jwt.sign({ user_id: '123' }, jwtSecret);
 
-// Проверка токена
+// Token checking
 jwt.verify(token, jwtSecret, (err, decoded) => {
   if (err) {
     console.log('Token verification failed');
@@ -64,8 +60,6 @@ jwt.verify(token, jwtSecret, (err, decoded) => {
 });
 
 //Userslist database
-
-
 app.post('/newuser', async (req, res) => {
   try {
     const { firstname, lastname, login, password, passwordhint, email } = req.body;
@@ -130,7 +124,7 @@ app.get('/userinfo/:login', async (req, res) => {
       return;
     }
 
-    res.json(user); // Send the entire user object back!
+    res.json(user);
   } catch (err) {
     console.log(err);
     res.status(400).send('Error getting user');
@@ -214,12 +208,6 @@ app.patch('/update/:login', async (req, res) => {
     const updateData = {};
     if (req.body.firstname) updateData.firstname = req.body.firstname;
     if (req.body.lastname) updateData.lastname = req.body.lastname;
-    // Password update functionality
-    // if (req.body.password) {
-    //   const salt = await bcrypt.genSalt(10);
-    //   const hashedPassword = await bcrypt.hash(req.body.password, salt);
-    //   updateData.password = hashedPassword;
-    // }
     if (req.body.email) updateData.email = req.body.email;
 
     const result = await usersCollection.updateOne({ login: req.params.login }, { $set: updateData });
@@ -238,19 +226,13 @@ app.patch('/update-password/:login', async (req, res) => {
   try {
     const db = client.db("users");
     const usersCollection = db.collection("users");
-
-    // Validate the login parameter
     const user = await usersCollection.findOne({ login: req.params.login });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-
-    // Validate input
     if (!req.body.password) {
       return res.status(400).json({ error: 'Password is required' });
     }
-
-    // Update password
     const updatedUser = await updatePassword(usersCollection, req.params.login, req.body.password);
     if (!updatedUser) {
       return res.status(404).json({ error: 'User not found' });
@@ -258,7 +240,6 @@ app.patch('/update-password/:login', async (req, res) => {
 
     res.status(200).json({ message: 'User updated' });
   } catch (err) {
-    // Secure logging mechanism
     logger.error(err);
     res.status(500).json({ error: 'Error updating user' });
   }
@@ -399,18 +380,22 @@ app.delete('/deletecard/:id', async (req, res) => {
   }
 });
 
-app.get('/searchcards', async (req, res) => {
-  const query = req.query.q; // Get the search query from the URL query parameters
+app.get('/searchcards/:login', async (req, res) => {
+  const query = req.query.q;
+  const login = req.params.login;
 
   try {
     const db = client.db("flashcards");
     const cardsCollection = db.collection("cards");
-
-    // Search for cards where the 'front' or 'back' text contains the query string
     const cards = await cardsCollection.find({
-      $or: [
-        { front: { $regex: query, $options: 'i' } }, // case-insensitive regex search
-        { back: { $regex: query, $options: 'i' } }
+      $and: [
+        { owner: login },
+        {
+          $or: [
+            { front: { $regex: query, $options: 'i' } }, // case-insensitive regex search
+            { back: { $regex: query, $options: 'i' } }
+          ]
+        }
       ]
     }).toArray();
 

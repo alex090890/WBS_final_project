@@ -7,6 +7,8 @@
 Here are the main features:
 
 - Add flashcards that can be displayed in a table;
-- Add a countdown to the date of your exam;
+- Review the cards at your own pace
 - Be able to edit and delete the flashcards;
 - Multilingual
+
+Read the full documentation at [GitBook](https://alexprof.gitbook.io/wordweb/frontend/functionality)

@@ -135,7 +135,7 @@ function DashboardUa() {
       </Card>
               <Card title="Знайдіть свою картку" bordered={false}>
                             <CurrentDate />
-        <SearchUa />
+        <SearchUa user={user} />
       </Card>
       </div>
           <CardsListUa />

@@ -135,7 +135,7 @@ function DashboardDe() {
       </Card>
               <Card title="Suchen Sie Ihre Karte" bordered={false}>
                             <CurrentDate />
-        <SearchDe />
+        <SearchDe user={user} />
       </Card>
       </div>
             <CardsListDe />

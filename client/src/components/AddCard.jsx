@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Input } from 'antd';
 
+const { TextArea } = Input;
+
 const initialState = {
   frontside: "",
   backside: "",
@@ -57,7 +59,8 @@ export default function AddCard() {
         <form onSubmit={handleSubmit}>
           <label>
             Front Side:
-            <Input
+            <TextArea
+              rows={4}
               type="text"
               name="frontside"
               value={state.frontside}
@@ -68,7 +71,8 @@ export default function AddCard() {
           <br />
           <label>
             Back Side:
-            <Input
+            <TextArea
+              rows={4}
               type="text"
               name="backside"
               value={state.backside}

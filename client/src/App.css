@@ -176,18 +176,17 @@ label {
 .front-side {
   background-color: rgb(226, 226, 226);
   border-radius: 10px;
-  padding-left: 5px;
+  padding: 15px;
 }
 
 .back-side {
-  padding-left: 5px;
+  padding: 15px;
   border: 1px solid rgb(226, 226, 226);
   border-radius: 10px;
 }
 
 .front-side:hover, .back-side:hover {
-  background-color: rgb(124, 133, 203);
-  box-shadow: 0 0 10px rgba(145, 231, 234, 0.746);
+  box-shadow: 0 0 10px rgb(124, 133, 203);
 } 
 
 .save-cards, .delete-btn, .update-btn, .search-btn, .card-update-btn {

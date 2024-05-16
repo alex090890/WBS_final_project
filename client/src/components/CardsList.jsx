@@ -3,6 +3,8 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Input, Card, Flex, Spin } from 'antd';
 
+const { TextArea } = Input;
+
 export default function CardList() {
   const { login } = useParams();
   const [cards, setCards] = useState([]);
@@ -22,26 +24,27 @@ export default function CardList() {
   textAlign: 'center',
 };
 
-  useEffect(() => {
-    if (!login) return;
+useEffect(() => {
+  if (!login) return;
 
-    setLoading(true);
-    axios.get(`https://wordweb.vercel.app/cards/${login}`)
-      .then((response) => {
-        if (response.data.length > 0) {
-          setCards(response.data);
-          updateCardCounts(response.data);
-        } else {
-          setError('No cards found');
-        }
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setError('Unexpected error');
-        setLoading(false);
-      })
-  }, [login]);
+  setLoading(true);
+  axios.get(`https://wordweb.vercel.app/cards/${login}`)
+    .then((response) => {
+      if (response.data.length > 0) {
+        const sortedCards = response.data.sort((a, b) => a.front.localeCompare(b.front));
+        setCards(sortedCards);
+        updateCardCounts(sortedCards);
+      } else {
+        setError('No cards found');
+      }
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error(error);
+      setError('Unexpected error');
+      setLoading(false);
+    })
+}, [login]);
 
   const updateCardCounts = (cards) => {
     const counts = {
@@ -188,10 +191,10 @@ export default function CardList() {
               {showUpdate[card._id] && (
                 <form>
                   <label>Front:</label>
-                  <Input type="text" defaultValue={card.front} />
+                  <TextArea type="text" defaultValue={card.front} />
                   <br />
                   <label>Back:</label>
-                  <Input type="text" defaultValue={card.back} />
+                  <TextArea type="text" defaultValue={card.back} />
                   <br />
                   <button onClick={(e) => {
                     e.preventDefault();

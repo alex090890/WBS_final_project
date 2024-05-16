@@ -135,7 +135,7 @@ function Dashboard() {
       </Card>
               <Card title="Find your card" bordered={false}>
                             <CurrentDate />
-        <Search />
+        <Search user={user} />
       </Card>
       </div>
           <CardsList />
